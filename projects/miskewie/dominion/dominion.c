@@ -678,6 +678,7 @@ int cardEffectAdventurer(struct gameState *state){
 int cardEffectSmithy(struct gameState *state, int handPos){
   int currentPlayer = whoseTurn(state);
   //+3 Cards
+  int i;
   for (i = 0; i < 3; i++){
 	  drawCard(currentPlayer, state);
 	}
