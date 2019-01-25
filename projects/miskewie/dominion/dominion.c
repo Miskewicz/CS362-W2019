@@ -651,7 +651,7 @@ int cardEffectAdventurer(struct gameState *state){
   int drawntreasure=0;
   int cardDrawn;
   int currentPlayer = whoseTurn(state);
-  int temphand[MAX_HAND];
+  int temphand[5];
   int z = 0;// this is the counter for the temp hand
   while(drawntreasure<2){
     if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -667,7 +667,7 @@ int cardEffectAdventurer(struct gameState *state){
       z++;
     }
   }
-  while(z-1>=0){
+  while(z-1>0){
     state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
     z=z-1;
   }
@@ -683,7 +683,7 @@ int cardEffectSmithy(struct gameState *state, int handPos){
 	  drawCard(currentPlayer, state);
 	}
   //discard card from hand
-  discardCard(handPos, currentPlayer, state, 0);
+  discardCard(handPos, currentPlayer, 0, 0);
 
   return 0;
 }
@@ -695,7 +695,7 @@ int cardEffectVillage(struct gameState *state, int handPos){
   drawCard(currentPlayer, state);
 			
   //+2 Actions
-  state->numActions = state->numActions + 2;
+  state->numActions = 2;
 			
   //discard played card from hand
   discardCard(handPos, currentPlayer, state, 0);
@@ -704,7 +704,7 @@ int cardEffectVillage(struct gameState *state, int handPos){
 
 //Mine
 int cardEffectMine(struct gameState *state, int choice1, int choice2, int handPos){
-  int currentPlayer = whoseTurn(state);
+  int currentPlayer = 0;
   int i;
   int j;
   j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -726,7 +726,7 @@ int cardEffectMine(struct gameState *state, int choice1, int choice2, int handPo
 
   //discard trashed card
   for (i = 0; i < state->handCount[currentPlayer]; i++){
-	  if (state->hand[currentPlayer][i] == j)
+	  if (state->hand[currentPlayer][i] = j)
 	    {
 	      discardCard(i, currentPlayer, state, 0);			
 	      break;
