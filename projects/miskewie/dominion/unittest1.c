@@ -5,12 +5,12 @@
 
 //test the isGameOver function
 int main(){
-    
+
     //initialize gameState, 2 player game
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall,};
     struct gameState gs;
     struct gameState gsCopy;
-    initializeGame(2, kCards, 0, &gs)
+    initializeGame(2, kCards, 0, &gs);
     gsCopy = gs;
 
     //beginning of game - isGameOver should return false
