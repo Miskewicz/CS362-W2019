@@ -29,6 +29,11 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
+test_helpers.o: test_helpers.h test_helpers.c dominion.o
+	gcc -c test_helpers.c dominion.o rngs.o
+
+unittestresults: unittest1.c dominion.o rngs.o test_helpers.o
+	gcc -o unittest1 unittest1.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
