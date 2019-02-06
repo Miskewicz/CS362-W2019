@@ -19,15 +19,15 @@ void checkAllEmpty(struct gameState* gs){
     }
 }
 
-//single card in draw pile
-void checkSingleInDraw(struct gameState* gs, int c, int expectedScore, char* msg){
+//single card in hande
+void checkSingleInHand(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     struct gameState gsCopy;
     for (i = 0; i < MAX_PLAYERS; i++){
-        gs->handCount[i] = 0;
+        gs->handCount[i] = 1;
         gs->discardCount[i] = 0;
-        gs->deckCount[i] = 1;
-        gs->deck[i][0] = c;
+        gs->deckCount[i] = 0;
+        gs->hand[i][0] = c;
         gsCopy = *gs;
         checkValue(scoreFor(i, gs), expectedScore, msg);
         compareGameState(gs, &gsCopy); //should be no state change
@@ -105,12 +105,12 @@ int main(){
     gsOrig = gs;
 
     checkAllEmpty(&gs); //check with all empty piles - score should be 0
-    checkSingleInDraw(&gs, estate, 1, "Single estate in draw pile"); //single estate in draw pile - score should be 1
-    checkSingleInDraw(&gs, duchy, 3, "Single duchy in draw pile"); //single estate in draw pile - score should be 3
-    checkSingleInDraw(&gs, province, 6, "Single province in draw pile"); //single estate in draw pile - score should be 6
-    checkSingleInDraw(&gs, curse, -1, "Single curse in draw pile"); //single estate in draw pile - score should be -1
-    checkSingleInDraw(&gs, great_hall, 1, "Single great hall in draw pile"); //single estate in draw pile - score should be 1
-    checkSingleInDraw(&gs, gardens, 0, "Single gardens in draw pile"); //single gardens in draw pile - score should be 0
+    checkSingleInHand(&gs, estate, 1, "Single estate in hand"); //single estate in hand - score should be 1
+    checkSingleInHand(&gs, duchy, 3, "Single duchy in hand"); //single estate in hand - score should be 3
+    checkSingleInHand(&gs, province, 6, "Single province in hand"); //single estate in hand - score should be 6
+    checkSingleInHand(&gs, curse, -1, "Single curse in hand"); //single estate in hand - score should be -1
+    checkSingleInHand(&gs, great_hall, 1, "Single great hall in hand"); //single estate in hand - score should be 1
+    checkSingleInHand(&gs, gardens, 0, "Single gardens in hand"); //single gardens in hand - score should be 0
 
     checkSingleInDiscard(&gs, estate, 1, "Single estate in discard pile"); //single estate in discard pile - score should be 1
     checkSingleInDiscard(&gs, duchy, 3, "Single duchy in discard pile"); //single estate in discard pile - score should be 3
