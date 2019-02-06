@@ -5,6 +5,7 @@
 
 //test the isGameOver function
 int main(){
+    int i; //iterator
 
     //initialize gameState, 2 player game
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall,};
@@ -15,7 +16,7 @@ int main(){
     gsOrig = gs;
 
     //beginning of game - isGameOver should return false
-    gsCopy = gs
+    gsCopy = gs;
     checkValue(isGameOver(&gs), 0, "Game Beginning");
     compareGameState(&gs, &gsCopy); //should be no state change
 
@@ -44,14 +45,38 @@ int main(){
     checkValue(isGameOver(&gs), 1, "3 Empty Kingdom Pile");
     compareGameState(&gs, &gsCopy); //should be no state change
 
+    //1 empty non kingdom supply pile - isGameOver should return false
+    gs = gsOrig; //reset gameState
+    gs.supplyCount[curse] = 0;
+    gsCopy = gs;
+    checkValue(isGameOver(&gs), 0, "Empty Curse Pile");
+    compareGameState(&gs, &gsCopy); //should be no state change
 
+    //2 empty non kingdom supply pile - isGameOver should return false
+    gs.supplyCount[copper] = 0;
+    gsCopy = gs;
+    checkValue(isGameOver(&gs), 0, "+Empty Copper Pile");
+    compareGameState(&gs, &gsCopy); //should be no state change
 
+    //3 empty non kingdom supply pile - isGameOver should return true
+    gs.supplyCount[duchy] = 0;
+    gsCopy = gs;
+    checkValue(isGameOver(&gs), 1, "+Empty Duchy Pile");
+    compareGameState(&gs, &gsCopy); //should be no state change
 
+    //4 empty supply piles - isGameOver should return true
+    gs.supplyCount[silver] = 0;
+    gsCopy = gs;
+    checkValue(isGameOver(&gs), 1, "+Empty silver Pile");
+    compareGameState(&gs, &gsCopy); //should be no state change
 
-
-    //The Province Supply pile is empty (or the Colony Supply pile is empty, in a game with the Colony card from the Prosperity expansion)
-    //Any three Supply piles are empty. (Any four piles when playing with five or six players.) This includes all the Supply piles, not just the 10 Kingdom card piles that are selected for each game. So, for instance, if the Estate pile, the Curse pile, and one of the Kingdom card piles is empty, the game ends.
-
+    //all empty supply piles - isGameOver should return true
+    for (i=curse; i<=treasure_map; i++){
+        gs.supplyCount[i]=0;
+    }
+    gsCopy = gs;
+    checkValue(isGameOver(&gs), 1, "All empty piles");
+    compareGameState(&gs, &gsCopy); //should be no state change
 
     return 0;
 }
