@@ -162,9 +162,31 @@ int main(){
         }
     }
 
+    //check for full discard, hand, and deck
     gs = gsOrig;
     checkAllFull(&gs, estate, MAX_HAND + MAX_DECK*2, "All full of estates");
 
+    //verify gardens - 9 cards should be 0 points
+    gs = gsOrig;
+    gs.deckCount[0] = 1;
+    gs.deck[0][0] = gardens;
+    for (i = 1; i < 9; i++){
+        gs.deck[0][i] = smithy;
+        gs.deckCount[0]++;
+    }
+    checkValue(scoreFor(0, &gs), 0, "gardens, 9 cards", 1);
+
+    //verify gardens - 10 cards should be 1 points
+    gs.deck[0][9] = smithy;
+    gs.deckCount[0] = 10;
+    checkValue(scoreFor(0, &gs), 1, "gardens, 10 cards", 1);
+
+    //verify gardens - 101 cards should be 10 points
+    for (i = 10; i < 101; i++){
+        gs.deck[0][i] = smithy;
+        gs.deckCount[0]++;
+    }
+    checkValue(scoreFor(0, &gs), 10, "gardens, 101 cards", 1);
 
     return 0;
 }
