@@ -14,7 +14,7 @@ the same or different.
 Will return 1 if the same, 0 if different.
 */
 int checkValue(int a, int b, char* testMsg){
-    printf("Validating %s\n", testMsg);
+    printf("Validating %s - ", testMsg);
     if (a == b){
         printf("SUCCESS\n");
         return 1;
