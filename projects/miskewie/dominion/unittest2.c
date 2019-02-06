@@ -169,6 +169,8 @@ int main(){
     //verify gardens - 9 cards should be 0 points
     gs = gsOrig;
     gs.deckCount[0] = 1;
+    gs.handCount[0] = 0;
+    gs.discardCount[0] = 0;
     gs.deck[0][0] = gardens;
     for (i = 1; i < 9; i++){
         gs.deck[0][i] = smithy;
