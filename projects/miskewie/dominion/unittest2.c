@@ -136,9 +136,9 @@ int main(){
     for (i = curse; i <= treasure_map; i++){
         sprintf(buffer, "single card in hand id: %i", i);
         if (checkSingleInHand(&gs, i, getCardScore(i), buffer)){
-            printf("%s - SUCCESS", buffer);
+            printf("%s - SUCCESS\n", buffer);
         } else {
-            printf("%s - FAILURE", buffer);
+            printf("%s - FAILURE\n", buffer);
         }
     }
 
@@ -146,9 +146,9 @@ int main(){
     for (i = curse; i <= treasure_map; i++){
         sprintf(buffer, "single card in discard id: %i", i);
         if (checkSingleInDiscard(&gs, i, getCardScore(i), buffer)){
-            printf("%s - SUCCESS", buffer);
+            printf("%s - SUCCESS\n", buffer);
         } else {
-            printf("%s - FAILURE", buffer);
+            printf("%s - FAILURE\n", buffer);
         }
     }
 
@@ -156,9 +156,9 @@ int main(){
     for (i = curse; i <= treasure_map; i++){
         sprintf(buffer, "single card in deck id: %i", i);
         if (checkSingleInDeck(&gs, i, getCardScore(i), buffer)){
-            printf("%s - SUCCESS", buffer);
+            printf("%s - SUCCESS\n", buffer);
         } else {
-            printf("%s - FAILURE", buffer);
+            printf("%s - FAILURE\n", buffer);
         }
     }
 
