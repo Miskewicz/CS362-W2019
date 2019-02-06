@@ -3,6 +3,8 @@
 
 #include "test_helpers.h"
 
+#include <limits.h>
+
 //Unit test for the isGameOver function
 int main(){
     int i; //iterator
@@ -76,6 +78,14 @@ int main(){
     }
     gsCopy = gs;
     checkValue(isGameOver(&gs), 1, "All empty piles");
+    compareGameState(&gs, &gsCopy); //should be no state change
+
+    //all piles max int - isGameOver should return false
+    for (i=curse; i<=treasure_map; i++){
+        gs.supplyCount[i]=INT_MAX;
+    }
+    gsCopy = gs;
+    checkValue(isGameOver(&gs), 0, "All empty piles");
     compareGameState(&gs, &gsCopy); //should be no state change
 
     return 0;
