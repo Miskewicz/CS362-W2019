@@ -21,48 +21,54 @@ void checkAllEmpty(struct gameState* gs){
 }
 
 //single card in hande
-void checkSingleInHand(struct gameState* gs, int c, int expectedScore, char* msg){
+int checkSingleInHand(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     struct gameState gsCopy;
+    int failure = 0;
     for (i = 0; i < MAX_PLAYERS; i++){
         gs->handCount[i] = 1;
         gs->discardCount[i] = 0;
         gs->deckCount[i] = 0;
         gs->hand[i][0] = c;
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), expectedScore, msg, 0);
+        if (!checkValue(scoreFor(i, gs), expectedScore, msg, 0)) failure = 1;
         compareGameState(gs, &gsCopy); //should be no state change
     }
+    return failure;
 }
 
 //single card in discard pile
-void checkSingleInDiscard(struct gameState* gs, int c, int expectedScore, char* msg){
+int checkSingleInDiscard(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     struct gameState gsCopy;
+    int failure = 0;
     for (i = 0; i < MAX_PLAYERS; i++){
         gs->handCount[i] = 0;
         gs->discardCount[i] = 1;
         gs->deckCount[i] = 0;
         gs->discard[i][0] = c;
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), expectedScore, msg, 0);
+        if (!checkValue(scoreFor(i, gs), expectedScore, msg, 0)) failure = 1;
         compareGameState(gs, &gsCopy); //should be no state change
     }
+    return failure;
 }
 
 //single card in deck
-void checkSingleInDeck(struct gameState* gs, int c, int expectedScore, char* msg){
+int checkSingleInDeck(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     struct gameState gsCopy;
+    int failure = 0;
     for (i = 0; i < MAX_PLAYERS; i++){
         gs->handCount[i] = 0;
         gs->discardCount[i] = 0;
         gs->deckCount[i] = 1;
         gs->deck[i][0] = c;
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), expectedScore, msg, 0);
+        if (!checkValue(scoreFor(i, gs), expectedScore, msg, 0)) failure = 1;
         compareGameState(gs, &gsCopy); //should be no state change
     }
+    return failure;
 }
 
 //all full of the same card - if estate, the score should be MAX_HAND + MAX_DECK*2
@@ -129,19 +135,31 @@ int main(){
     //check single card in hand
     for (i = curse; i <= treasure_map; i++){
         sprintf(buffer, "single card in hand id: %i", i);
-        checkSingleInHand(&gs, i, getCardScore(i), buffer);
+        if (checkSingleInHand(&gs, i, getCardScore(i), buffer)){
+            printf("%s - SUCCESS", buffer);
+        } else {
+            printf("%s - FAILURE", buffer);
+        }
     }
 
     //check single card in discard
     for (i = curse; i <= treasure_map; i++){
         sprintf(buffer, "single card in discard id: %i", i);
-        checkSingleInDiscard(&gs, i, getCardScore(i), buffer);
+        if (checkSingleInDiscard(&gs, i, getCardScore(i), buffer)){
+            printf("%s - SUCCESS", buffer);
+        } else {
+            printf("%s - FAILURE", buffer);
+        }
     }
 
     //check single card in deck
     for (i = curse; i <= treasure_map; i++){
         sprintf(buffer, "single card in deck id: %i", i);
-        checkSingleInDeck(&gs, i, getCardScore(i), buffer);
+        if (checkSingleInDeck(&gs, i, getCardScore(i), buffer)){
+            printf("%s - SUCCESS", buffer);
+        } else {
+            printf("%s - FAILURE", buffer);
+        }
     }
 
     gs = gsOrig;
