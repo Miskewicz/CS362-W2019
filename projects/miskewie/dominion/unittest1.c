@@ -85,7 +85,7 @@ int main(){
         gs.supplyCount[i]=INT_MAX;
     }
     gsCopy = gs;
-    checkValue(isGameOver(&gs), 0, "All empty piles");
+    checkValue(isGameOver(&gs), 0, "All max piles");
     compareGameState(&gs, &gsCopy); //should be no state change
 
     return 0;
