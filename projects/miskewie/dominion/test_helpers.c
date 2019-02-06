@@ -25,6 +25,22 @@ int checkValue(int a, int b, char* testMsg){
     }
 }
 
+/* compareGameStatePlayerHand 
+Compares every card in the specified player's hand between the two provided
+gameStates. Returns 0 if there are any differences, 1 if there are no differences.
+*/
+int compareGameStatePlayerHand(struct gameState* a, struct gameState* b, int player){
+    int i;
+
+    for (i=0;i<MAX_HAND;i++){
+        if(a->hand[player][i] != b->hand[player][i]){
+            return 0;
+        }
+    }
+    return 1;
+}
+
+
 /* compareGameState 
 Compares every property of two provided gameState pointers.
 If any individual property has a difference, the function will print
@@ -41,18 +57,14 @@ int compareGameState(struct gameState* a, struct gameState* b){
 
     //verify player hands
     for(i=0;i<MAX_PLAYERS;i++){
-        for(j=0;j<MAX_HAND;j++){
-            if (a->hand[i][j] != b->hand[i][j]){
+        if (!compareGameStatePlayerHand(a, b, i)){
                 printf("FAILURE: Player %i hand changed.", i);
                 failure = 1;
-                break;
             }
-        }
         //verify hand count
         if(a->handCount[i] != b->handCount[i]){
             printf("FAILURE: Player %i hand count changed.", i);
             failure = 1;
-            break;
         }
     }
     
