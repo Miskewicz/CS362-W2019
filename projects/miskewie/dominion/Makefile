@@ -34,6 +34,7 @@ test_helpers.o: test_helpers.h test_helpers.c dominion.o
 
 unittestresults: unittest1.c dominion.o rngs.o test_helpers.o
 	gcc -o unittest1 unittest1.c dominion.o rngs.o test_helpers.o $(CFLAGS)
+	gcc -o unittest2 unittest2.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
