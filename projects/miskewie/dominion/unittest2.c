@@ -34,7 +34,7 @@ int checkSingleInHand(struct gameState* gs, int c, int expectedScore, char* msg)
         if (!checkValue(scoreFor(i, gs), expectedScore, msg, 0)) failure = 1;
         compareGameState(gs, &gsCopy); //should be no state change
     }
-    return failure;
+    return !failure;
 }
 
 //single card in discard pile
@@ -51,7 +51,7 @@ int checkSingleInDiscard(struct gameState* gs, int c, int expectedScore, char* m
         if (!checkValue(scoreFor(i, gs), expectedScore, msg, 0)) failure = 1;
         compareGameState(gs, &gsCopy); //should be no state change
     }
-    return failure;
+    return !failure;
 }
 
 //single card in deck
@@ -68,7 +68,7 @@ int checkSingleInDeck(struct gameState* gs, int c, int expectedScore, char* msg)
         if (!checkValue(scoreFor(i, gs), expectedScore, msg, 0)) failure = 1;
         compareGameState(gs, &gsCopy); //should be no state change
     }
-    return failure;
+    return !failure;
 }
 
 //all full of the same card - if estate, the score should be MAX_HAND + MAX_DECK*2
