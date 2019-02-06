@@ -10,7 +10,7 @@ int main(){
     int i; //iterator
 
     //initialize gameState, 2 player game
-    int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall,};
+    int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
     struct gameState gs;
     struct gameState gsOrig;
     struct gameState gsCopy;
