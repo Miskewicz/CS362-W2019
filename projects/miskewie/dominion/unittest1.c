@@ -3,7 +3,7 @@
 
 #include "test_helpers.h"
 
-//test the isGameOver function
+//Unit test for the isGameOver function
 int main(){
     int i; //iterator
 
