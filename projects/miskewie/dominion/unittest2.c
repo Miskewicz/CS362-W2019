@@ -4,6 +4,7 @@
 #include "test_helpers.h"
 
 #include <limits.h>
+#include <stdio.h>
 
 //empty hand/deck/discard for each player - score should be 0 for each player
 void checkAllEmpty(struct gameState* gs){
@@ -64,7 +65,7 @@ void checkSingleInDeck(struct gameState* gs, int c, int expectedScore, char* msg
     }
 }
 
-//all full of estates - score should be MAX_HAND + MAX_DECK*2
+//all full of the same card - if estate, the score should be MAX_HAND + MAX_DECK*2
 void checkAllFull(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     int j;
@@ -76,13 +77,13 @@ void checkAllFull(struct gameState* gs, int c, int expectedScore, char* msg){
         gs->deckCount[i] = MAX_DECK;
 
         for (j = 0; j < gs->handCount[i]; j++){
-            gs->hand[i][j] = estate;
+            gs->hand[i][j] = c;
         }
         for (j = 0; j < gs->discardCount[i]; j++){
-            gs->discard[i][j] = estate;
+            gs->discard[i][j] = c;
         }
         for (j = 0; j < gs->deckCount[i]; j++){
-            gs->deck[i][j] = estate;
+            gs->deck[i][j] = c;
         }
 
         gsCopy = *gs;
@@ -91,40 +92,57 @@ void checkAllFull(struct gameState* gs, int c, int expectedScore, char* msg){
     }
 }
 
+//returns the card score for a SINGLE copy of the card
+int getCardScore(int c){
+    switch(c){
+        case estate:
+            return 1;
+        case duchy:
+            return 3;
+        case province:
+            return 6;
+        case curse:
+            return -1;
+        case great_hall:
+            return 1;
+        default:
+            return 0;
+    }
+}
+
+
 //Unit tests for the scoreFor function
 int main(){
-    int i; //iterator
-    int j;
-    
+    int i;
+    char buffer[256];
+
     //initialize gameState, 2 player game
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
     struct gameState gs;
     struct gameState gsOrig;
-    struct gameState gsCopy;
     initializeGame(2, kCards, 1, &gs);
     gsOrig = gs;
 
     checkAllEmpty(&gs); //check with all empty piles - score should be 0
-    checkSingleInHand(&gs, estate, 1, "Single estate in hand"); //single estate in hand - score should be 1
-    checkSingleInHand(&gs, duchy, 3, "Single duchy in hand"); //single estate in hand - score should be 3
-    checkSingleInHand(&gs, province, 6, "Single province in hand"); //single estate in hand - score should be 6
-    checkSingleInHand(&gs, curse, -1, "Single curse in hand"); //single estate in hand - score should be -1
-    checkSingleInHand(&gs, great_hall, 1, "Single great hall in hand"); //single estate in hand - score should be 1
-    checkSingleInHand(&gs, gardens, 0, "Single gardens in hand"); //single gardens in hand - score should be 0
 
-    checkSingleInDiscard(&gs, estate, 1, "Single estate in discard pile"); //single estate in discard pile - score should be 1
-    checkSingleInDiscard(&gs, duchy, 3, "Single duchy in discard pile"); //single estate in discard pile - score should be 3
-    checkSingleInDiscard(&gs, province, 6, "Single province in discard pile"); //single estate in discard pile - score should be 6
-    checkSingleInDiscard(&gs, curse, -1, "Single curse in discard pile"); //single estate in discard pile - score should be -1
-    checkSingleInDiscard(&gs, great_hall, 1, "Single great hall in discard pile"); //single estate in discard pile - score should be 1
-    checkSingleInDiscard(&gs, gardens, 0, "Single gardens in discard pile"); //single gardens in discard pile - score should be 0
 
-    checkSingleInDeck(&gs, estate, 1, "Single estate in deck"); //single estate in deck - score should be 1
-    checkSingleInDeck(&gs, duchy, 3, "Single duchy in deck"); //single estate in deck - score should be 3
-    checkSingleInDeck(&gs, province, 6, "Single province in deck"); //single estate in deck - score should be 6
-    checkSingleInDeck(&gs, curse, -1, "Single curse in deck"); //single estate in deck - score should be -1
-    checkSingleInDeck(&gs, great_hall, 1, "Single great hall in deck"); //single estate in deck - score should be 1
-    checkSingleInDeck(&gs, gardens, 0, "Single gardens in deck"); //single gardens in deck - score should be 0
+    //check single card in hand
+    for (i = curse; i <= treasure_map; i++){
+        sprintf(buffer, "single card in hand id: %i", i);
+        checkSingleInHand(&gs, i, getCardScore(i), buffer);
+    }
+
+    //check single card in discard
+    for (i = curse; i <= treasure_map; i++){
+        sprintf(buffer, "single card in discard id: %i", i);
+        checkSingleInDiscard(&gs, i, getCardScore(i), buffer);
+    }
+
+    //check single card in deck
+    for (i = curse; i <= treasure_map; i++){
+        sprintf(buffer, "single card in deck id: %i", i);
+        checkSingleInDeck(&gs, i, getCardScore(i), buffer);
+    }
 
     gs = gsOrig;
     checkAllFull(&gs, estate, MAX_HAND + MAX_DECK*2, "All full of estates");
