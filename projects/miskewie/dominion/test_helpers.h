@@ -11,7 +11,7 @@ the same or different.
 
 Will return 1 if the same, 0 if different.
 */
-int checkValue(int a, int b, char* testMsg);
+int checkValue(int a, int b, char* testMsg, int printSuccess);
 
 /* compareGameState 
 Compares every property of two provided gameState pointers.

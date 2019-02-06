@@ -13,14 +13,13 @@ the same or different.
 
 Will return 1 if the same, 0 if different.
 */
-int checkValue(int a, int b, char* testMsg){
-    printf("Validating %s - ", testMsg);
+int checkValue(int a, int b, char* testMsg, int printSuccess){
     if (a == b){
-        printf("SUCCESS\n");
+        if (printSuccess) printf("Validating %s - SUCCESS\n", testMsg);
         return 1;
     }
     else {
-        printf("FAILURE\n");
+        printf("Validating %s - FAILURE - Actual: %i Expected: %i\n", testMsg, a, b);
         return 0;
     }
 }

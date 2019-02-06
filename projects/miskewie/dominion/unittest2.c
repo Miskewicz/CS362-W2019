@@ -15,7 +15,7 @@ void checkAllEmpty(struct gameState* gs){
         gs->discardCount[i] = 0;
         gs->deckCount[i] = 0;
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), 0, "Empty deck, hand, and discard");
+        checkValue(scoreFor(i, gs), 0, "Empty deck, hand, and discard", 1);
         compareGameState(gs, &gsCopy); //should be no state change
     }
 }
@@ -30,7 +30,7 @@ void checkSingleInHand(struct gameState* gs, int c, int expectedScore, char* msg
         gs->deckCount[i] = 0;
         gs->hand[i][0] = c;
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), expectedScore, msg);
+        checkValue(scoreFor(i, gs), expectedScore, msg, 0);
         compareGameState(gs, &gsCopy); //should be no state change
     }
 }
@@ -45,7 +45,7 @@ void checkSingleInDiscard(struct gameState* gs, int c, int expectedScore, char* 
         gs->deckCount[i] = 0;
         gs->discard[i][0] = c;
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), expectedScore, msg);
+        checkValue(scoreFor(i, gs), expectedScore, msg, 0);
         compareGameState(gs, &gsCopy); //should be no state change
     }
 }
@@ -60,7 +60,7 @@ void checkSingleInDeck(struct gameState* gs, int c, int expectedScore, char* msg
         gs->deckCount[i] = 1;
         gs->deck[i][0] = c;
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), expectedScore, msg);
+        checkValue(scoreFor(i, gs), expectedScore, msg, 0);
         compareGameState(gs, &gsCopy); //should be no state change
     }
 }
@@ -87,7 +87,7 @@ void checkAllFull(struct gameState* gs, int c, int expectedScore, char* msg){
         }
 
         gsCopy = *gs;
-        checkValue(scoreFor(i, gs), expectedScore, msg);
+        checkValue(scoreFor(i, gs), expectedScore, msg, 1);
         compareGameState(gs, &gsCopy); //should be no state change
     }
 }
