@@ -14,12 +14,13 @@ int main(){
     //initialize gameState, 2 player game
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
     struct gameState gs;
-    struct gameState gsOrig;
+    //struct gameState gsOrig;
     struct gameState gsCopy;
     initializeGame(2, kCards, 1, &gs);
-    gsOrig = gs;
+    //gsOrig = gs;
 
     //add smithy to player 1 hand
+    gs.whoseTurn = 0;
     gs.hand[0][gs.handCount[0]++] = smithy;
 
     //play smithy with more than three cards in deck
@@ -30,10 +31,10 @@ int main(){
     cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus);
 
     //check handCount up 2 (+3 cards - 1 Smithy)
-    checkValue(gs.handCount[0], gsOrig.handCount[0] + 2, "hand count up 2", 1);
+    checkValue(gs.handCount[0], gsCopy.handCount[0] + 2, "hand count up 2", 1);
 
     //check deckCount
-    checkValue(gs.deckCount[0], gsOrig.deckCount[0] - 3, "deck down 3 cards", 1);
+    checkValue(gs.deckCount[0], gsCopy.deckCount[0] - 3, "deck down 3 cards", 1);
 
     //check smithy was added to played crds
     checkValue(gs.playedCardCount, 1, "one card played", 1);
