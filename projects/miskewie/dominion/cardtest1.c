@@ -30,6 +30,7 @@ int main(){
     }
     gsCopy = gs;
 
+    printf("Starting hand:\n");
     debugPrintPlayerHand(&gs, 0);
 
     cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus);
