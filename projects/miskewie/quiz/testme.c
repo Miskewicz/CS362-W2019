@@ -3,16 +3,25 @@
 #include<stdlib.h>
 #include<time.h>
 
+char stringBuffer[500];
+
 char inputChar()
 {
-    // TODO: rewrite this function
-    return ' ';
+  // returns a random character between ' ' and '~'
+  return ' ' + rand() % 94;
 }
 
 char *inputString()
 {
-    // TODO: rewrite this function
-    return "";
+  int length;
+  int i;
+  length = rand() % 11;
+
+  for (i = 0; i < length; i++){
+    stringBuffer[i] = inputChar();
+  }
+  stringBuffer[i] = '\0';
+  return stringBuffer;
 }
 
 void testme()
