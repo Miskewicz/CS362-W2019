@@ -10,6 +10,7 @@
 int main(){
     int i;
     int j;
+    int player;
     int coinValue;
     char buffer [128];
 
@@ -74,18 +75,21 @@ int main(){
         compareGameState(&gs, &gsCopy); //should be no state change
     }
 
-    //1 of each coin in hand
-    gs = gsOrig;
-    gs.handCount[0] = 3;
-    j = 0;
-    for(i = copper; i <=gold; i++){
-        gs.hand[0][j++] = i;
+    //1 of each coin in hand - each player
+    for(player = 0; player < MAX_PLAYERS; player++){
+        gs = gsOrig;
+        gs.handCount[player] = 3;
+        j = 0;
+        for(i = copper; i <=gold; i++){
+            gs.hand[player][j++] = i;
+        }
+        gsCopy = gs;
+        updateCoins(player, &gs, 0);
+        sprintf(buffer, "1 of each coin player %i", player);
+        checkValue(gs.coins, 6, buffer, 1);
+        gsCopy.coins = gs.coins;
+        compareGameState(&gs, &gsCopy); //should be no state change
     }
-    gsCopy = gs;
-    updateCoins(0, &gs, 0);
-    checkValue(gs.coins, 6, "1 of each coin", 1);
-    gsCopy.coins = gs.coins;
-    compareGameState(&gs, &gsCopy); //should be no state change
 
     //MAX_HAND full of copper
     gs = gsOrig;
