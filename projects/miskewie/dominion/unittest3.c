@@ -22,7 +22,6 @@ int main(){
     gsOrig = gs;
 
     //coins in deck+discard, none in hand - should be 0 coins
-    gsCopy = gs;
     gs.deckCount[0] = 2;
     gs.deck[0][0] = copper;
     gs.deck[0][1] = silver;
@@ -31,6 +30,7 @@ int main(){
     gs.hand[0][1] = smithy;
     gs.discardCount[0] = 1;
     gs.discard[0][0] = gold;
+    gsCopy = gs;
     updateCoins(0, &gs, 0);
     checkValue(gs.coins, 0, "coins in deck+discard, none in hand", 1);
     gsCopy.coins = gs.coins;
