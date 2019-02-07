@@ -8,7 +8,13 @@ char stringBuffer[500];
 char inputChar()
 {
   // returns a random character between ' ' and '~'
-  return ' ' + rand() % 94;
+  return ' ' + rand() % 95;
+}
+
+char inputCharLowerCase()
+{
+  // returns a random character between 'a' and 'z'
+  return 'a' + rand() % 26;
 }
 
 char *inputString()
@@ -18,7 +24,7 @@ char *inputString()
   length = rand() % 11;
 
   for (i = 0; i < length; i++){
-    stringBuffer[i] = inputChar();
+    stringBuffer[i] = inputCharLowerCase();
   }
   stringBuffer[i] = '\0';
   return stringBuffer;
