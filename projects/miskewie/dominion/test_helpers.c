@@ -31,7 +31,7 @@ Prints card indexes for the specified players hand.
 void debugPrintPlayerHand(struct gameState* gs, int player){
     int i;
     for(i = 0; i < gs->handCount[player]; i++){
-        printf("1: %i\n", gs->hand[player][i]);
+        printf("%i: %i\n", i, gs->hand[player][i]);
     }
 }
 
