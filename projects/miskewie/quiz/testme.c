@@ -21,7 +21,8 @@ char *inputString()
 {
   int length;
   int i;
-  length = rand() % 11;
+  //length = rand() % 11;
+  length = 5;
 
   for (i = 0; i < length; i++){
     stringBuffer[i] = inputCharLowerCase();
