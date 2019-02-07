@@ -49,7 +49,8 @@ int main(){
     gsCopy.playedCards[gsCopy.playedCardCount++] = smithy; //add a smithy to played cards
     gsCopy.handCount[0]--; //remove smithy from hand
     for (i = 0; i < 3; i++){
-        gsCopy.hand[0][gsCopy.handCount[0]++] = gsCopy.deck[0][gsCopy.deckCount[0]--]; //add card from deck into hand
+        gsCopy.hand[0][gsCopy.handCount[0]++] = gsCopy.deck[0][gsCopy.deckCount[0]-1]; //add card from deck into hand
+        gsCopy.deckCount[0]--;
     }
 
     //check cards in hand (that they match the top three cards of the draw pile)
