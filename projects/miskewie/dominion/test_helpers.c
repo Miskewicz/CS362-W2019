@@ -57,12 +57,12 @@ int compareGameState(struct gameState* a, struct gameState* b){
     //verify player hands
     for(i=0;i<MAX_PLAYERS;i++){
         if (!compareGameStatePlayerHand(a, b, i)){
-                printf("FAILURE: Player %i hand changed.", i);
+                printf("FAILURE: Player %i hand changed.\n", i);
                 failure = 1;
             }
         //verify hand count
         if(a->handCount[i] != b->handCount[i]){
-            printf("FAILURE: Player %i hand count changed.", i);
+            printf("FAILURE: Player %i hand count changed.\n", i);
             failure = 1;
         }
     }
@@ -71,14 +71,14 @@ int compareGameState(struct gameState* a, struct gameState* b){
     for(i=0;i<MAX_PLAYERS;i++){
         for(j=0;j<MAX_DECK;j++){
             if (a->deck[i][j] != b->deck[i][j]){
-                printf("FAILURE: Player %i deck changed.", i);
+                printf("FAILURE: Player %i deck changed.\n", i);
                 failure = 1;
                 break;
             }
         }
         //verify deck count
         if(a->deckCount[i] != b->deckCount[i]){
-            printf("FAILURE: Player %i deck count changed.", i);
+            printf("FAILURE: Player %i deck count changed.\n", i);
             failure = 1;
             break;
         }
@@ -88,14 +88,14 @@ int compareGameState(struct gameState* a, struct gameState* b){
     for(i=0;i<MAX_PLAYERS;i++){
         for(j=0;j<MAX_DECK;j++){
             if (a->discard[i][j] != b->discard[i][j]){
-                printf("FAILURE: Player %i discard changed.", i);
+                printf("FAILURE: Player %i discard changed.\n", i);
                 failure = 1;
                 break;
             }
         }
         //verify discard count
         if(a->discardCount[i] != b->discardCount[i]){
-            printf("FAILURE: Player %i discard count changed.", i);
+            printf("FAILURE: Player %i discard count changed.\n", i);
             failure = 1;
             break;
         }
@@ -104,7 +104,7 @@ int compareGameState(struct gameState* a, struct gameState* b){
     //verify Supply Count
     for(i=0;i<treasure_map+1;i++){
         if (a->supplyCount[i] != b->supplyCount[i]){
-            printf("FAILURE: Supply Count %i changed.", i);
+            printf("FAILURE: Supply Count %i changed.\n", i);
             failure = 1;
         }
     }
@@ -112,7 +112,7 @@ int compareGameState(struct gameState* a, struct gameState* b){
     //verify embargo Tokens
     for(i=0;i<treasure_map+1;i++){
         if (a->embargoTokens[i] != b->embargoTokens[i]){
-            printf("FAILURE: Embargo Tokens %i changed.", i);
+            printf("FAILURE: Embargo Tokens %i changed.\n", i);
             failure = 1;
         }
     }   
@@ -120,47 +120,47 @@ int compareGameState(struct gameState* a, struct gameState* b){
     //verify played cards
     for(i=0;i<MAX_DECK;i++){
         if (a->playedCards[i] != b->playedCards[i]){
-            printf("FAILURE: Played Cards %i changed.", i);
+            printf("FAILURE: Played Cards %i changed.\n", i);
             failure = 1;
         }    
     }
     //played cards count
     if (a->playedCardCount != b->playedCardCount){
-        printf("FAILURE: playedCardCount changed.");
+        printf("FAILURE: playedCardCount changed.\n");
         failure = 1;
     }
 
     //Other verifications
     if (a->numPlayers != b->numPlayers){
-        printf("FAILURE: numPlayers changed.");
+        printf("FAILURE: numPlayers changed.\n");
         failure = 1;
     }
     if (a->outpostPlayed != b->outpostPlayed){
-        printf("FAILURE: outpostPlayed changed.");
+        printf("FAILURE: outpostPlayed changed.\n");
         failure = 1;
     }
     if (a->outpostTurn != b->outpostTurn){
-        printf("FAILURE: outpostTurn changed.");
+        printf("FAILURE: outpostTurn changed.\n");
         failure = 1;
     }
     if (a->whoseTurn != b->whoseTurn){
-        printf("FAILURE: whoseTurn changed.");
+        printf("FAILURE: whoseTurn changed.\n");
         failure = 1;
     }
     if (a->phase != b->phase){
-        printf("FAILURE: phase changed.");
+        printf("FAILURE: phase changed.\n");
         failure = 1;
     }
     if (a->numActions != b->numActions){
-        printf("FAILURE: numActions changed.");
+        printf("FAILURE: numActions changed.\n");
         failure = 1;
     }
     if (a->coins != b->coins){
-        printf("FAILURE: coins changed.");
+        printf("FAILURE: coins changed.\n");
         failure = 1;
     }
     if (a->numBuys != b->numBuys){
-        printf("FAILURE: numBuys changed.");
+        printf("FAILURE: numBuys changed.\n");
         failure = 1;
     }
 
