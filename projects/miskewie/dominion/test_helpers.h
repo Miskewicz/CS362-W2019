@@ -13,6 +13,10 @@ Will return 1 if the same, 0 if different.
 */
 int checkValue(int a, int b, char* testMsg, int printSuccess);
 
+/* debugPrintPlayerHand 
+Prints card indexes for the specified players hand.
+*/
+void debugPrintPlayerHand(struct gameState* gs, int player);
 
 /* compareGameStatePlayerHand 
 Compares every card in the specified player's hand between the two provided

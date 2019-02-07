@@ -4,6 +4,7 @@
 #include "test_helpers.h"
 
 #include <limits.h>
+#include <stdio.h>
 
 //smithy test
 int main(){
@@ -28,6 +29,9 @@ int main(){
         gs.deck[0][gs.deckCount[0]++] = copper;
     }
     gsCopy = gs;
+
+    debugPrintPlayerHand(&gs, 0);
+
     cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus);
 
     //check handCount up 2 (+3 cards - 1 Smithy)

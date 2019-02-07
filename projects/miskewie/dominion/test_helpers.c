@@ -24,6 +24,17 @@ int checkValue(int a, int b, char* testMsg, int printSuccess){
     }
 }
 
+
+/* debugPrintPlayerHand 
+Prints card indexes for the specified players hand.
+*/
+void debugPrintPlayerHand(struct gameState* gs, int player){
+    int i;
+    for(i = 0; i < gs->handCount[player]; i++){
+        printf("1: %i\n", gs->hand[player][i]);
+    }
+}
+
 /* compareGameStatePlayerHand 
 Compares every card in the specified player's hand between the two provided
 gameStates. Returns 0 if there are any differences, 1 if there are no differences.
@@ -49,6 +60,7 @@ int compareGameStatePlayerHand(struct gameState* a, struct gameState* b, int pla
     //compare card counts
     for (i=0;i<=treasure_map;i++){
         if(allCardsA[i] != allCardsB[i]){
+            printf("FAILURE - card count in hand different for %i | Actual: %i, Expected: %i\n", i, allCardsA[i], allCardsB[i]);
             return 0;
         }
     }
