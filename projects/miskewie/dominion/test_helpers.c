@@ -39,10 +39,10 @@ int compareGameStatePlayerHand(struct gameState* a, struct gameState* b, int pla
     }
 
     //get card counts for a and b gameState
-    for (i = 0; i <= a->handCount[player]; i++){
+    for (i = 0; i < a->handCount[player]; i++){
         allCardsA[a->hand[player][i]]++;
     }
-    for (i = 0; i <= b->handCount[player]; i++){
+    for (i = 0; i < b->handCount[player]; i++){
         allCardsB[b->hand[player][i]]++;
     }
 
