@@ -30,9 +30,25 @@ gameStates. Returns 0 if there are any differences, 1 if there are no difference
 */
 int compareGameStatePlayerHand(struct gameState* a, struct gameState* b, int player){
     int i;
+    int allCardsA[treasure_map + 1] = { 0 }; //store card counts for gameState a
+    int allCardsB[treasure_map + 1] = { 0 }; //store card counts for gameState b
 
-    for (i=0;i<MAX_HAND;i++){
-        if(a->hand[player][i] != b->hand[player][i]){
+    //if hand sizes different return 0
+    if (a->handCount[player] != b->handCount[player]){
+        return 0;
+    }
+
+    //get card counts for a and b gameState
+    for (i = 0; i <= a->handCount[player]; i++){
+        allCardsA[a->hand[player][i]]++;
+    }
+    for (i = 0; i <= b->handCount[player]; i++){
+        allCardsB[b->hand[player][i]]++;
+    }
+
+    //compare card counts
+    for (i=0;i<=treasure_map;i++){
+        if(allCardsA[i] != allCardsB[i]){
             return 0;
         }
     }
@@ -57,47 +73,40 @@ int compareGameState(struct gameState* a, struct gameState* b){
     //verify player hands
     for(i=0;i<MAX_PLAYERS;i++){
         if (!compareGameStatePlayerHand(a, b, i)){
-                printf("FAILURE: Player %i hand changed.\n", i);
-                failure = 1;
-            }
-        //verify hand count
-        if(a->handCount[i] != b->handCount[i]){
-            printf("FAILURE: Player %i hand count changed.\n", i);
+            printf("FAILURE: Player %i hand changed.\n", i);
             failure = 1;
         }
     }
     
     //verify decks
     for(i=0;i<MAX_PLAYERS;i++){
-        for(j=0;j<MAX_DECK;j++){
-            if (a->deck[i][j] != b->deck[i][j]){
-                printf("FAILURE: Player %i deck changed.\n", i);
-                failure = 1;
-                break;
-            }
-        }
-        //verify deck count
-        if(a->deckCount[i] != b->deckCount[i]){
-            printf("FAILURE: Player %i deck count changed.\n", i);
+        if (a->deckCount[i] != b->deckCount[i]){
+            printf("FAILURE: Player %i deck changed.\n", i);
             failure = 1;
-            break;
+        }else{
+            for(j=0;j<a->deckCount[i];j++){
+                if (a->deck[i][j] != b->deck[i][j]){
+                    printf("FAILURE: Player %i deck changed.\n", i);
+                    failure = 1;
+                    break;
+                }
+            }
         }
     }
 
-    //verify discard pile
+    //verify decks
     for(i=0;i<MAX_PLAYERS;i++){
-        for(j=0;j<MAX_DECK;j++){
-            if (a->discard[i][j] != b->discard[i][j]){
-                printf("FAILURE: Player %i discard changed.\n", i);
-                failure = 1;
-                break;
-            }
-        }
-        //verify discard count
-        if(a->discardCount[i] != b->discardCount[i]){
-            printf("FAILURE: Player %i discard count changed.\n", i);
+        if (a->discardCount[i] != b->discardCount[i]){
+            printf("FAILURE: Player %i discard changed.\n", i);
             failure = 1;
-            break;
+        }else{
+            for(j=0;j<a->discardCount[i];j++){
+                if (a->discard[i][j] != b->discard[i][j]){
+                    printf("FAILURE: Player %i discard changed.\n", i);
+                    failure = 1;
+                    break;
+                }
+            }
         }
     }
 
@@ -118,16 +127,16 @@ int compareGameState(struct gameState* a, struct gameState* b){
     }   
 
     //verify played cards
-    for(i=0;i<MAX_DECK;i++){
-        if (a->playedCards[i] != b->playedCards[i]){
-            printf("FAILURE: Played Cards %i changed.\n", i);
-            failure = 1;
-        }    
-    }
-    //played cards count
     if (a->playedCardCount != b->playedCardCount){
         printf("FAILURE: playedCardCount changed.\n");
         failure = 1;
+    } else {
+        for(i=0;i<a->playedCardCount;i++){
+            if (a->playedCards[i] != b->playedCards[i]){
+                printf("FAILURE: Played Cards %i changed.\n", i);
+                failure = 1;
+            }    
+        }
     }
 
     //Other verifications

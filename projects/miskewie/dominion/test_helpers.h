@@ -13,6 +13,14 @@ Will return 1 if the same, 0 if different.
 */
 int checkValue(int a, int b, char* testMsg, int printSuccess);
 
+
+/* compareGameStatePlayerHand 
+Compares every card in the specified player's hand between the two provided
+gameStates. Returns 0 if there are any differences, 1 if there are no differences.
+*/
+int compareGameStatePlayerHand(struct gameState* a, struct gameState* b, int player);
+
+
 /* compareGameState 
 Compares every property of two provided gameState pointers.
 If any individual property has a difference, the function will print
