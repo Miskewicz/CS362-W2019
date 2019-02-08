@@ -32,12 +32,13 @@ runtests: testDrawCard
 test_helpers.o: test_helpers.h test_helpers.c dominion.o
 	gcc -c test_helpers.c dominion.o rngs.o
 
-unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c dominion.o rngs.o test_helpers.o
+unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c dominion.o rngs.o test_helpers.o
 	gcc -o unittest1 unittest1.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 	gcc -o unittest2 unittest2.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 	gcc -o unittest3 unittest3.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 	gcc -o unittest4 unittest4.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 	gcc -o cardtest1 cardtest1.c dominion.o rngs.o test_helpers.o $(CFLAGS)
+	gcc -o cardtest2 cardtest2.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
