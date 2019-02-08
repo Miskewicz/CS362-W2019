@@ -23,7 +23,7 @@ int main(){
     gs.hand[0][gs.handCount[0]++] = adventurer;
     gsOrig = gs; //save copy
 
-    printf("Test 1: Two treaure cards on top of deck\n");
+    printf("\nTest 1: Two treaure cards on top of deck\n");
     printf("========================================\n");
     for(i = copper; i <= gold; i++){
         gs = gsOrig; //reset to original
@@ -62,14 +62,14 @@ int main(){
     }
 
     gs = gsOrig;
-    printf("Test 2: 1 non treaure card on top of deck, then 2 treasure cards\n");
+    printf("\nTest 2: 1 non treaure card on top of deck, then 2 treasure cards\n");
     printf("========================================\n");
+    //add a copper
+    gs.deck[0][gs.deckCount[0]++] = copper;
+    //add a copper
+    gs.deck[0][gs.deckCount[0]++] = copper;
     //add a duchy
     gs.deck[0][gs.deckCount[0]++] = duchy;
-    //add a copper
-    gs.deck[0][gs.deckCount[0]++] = copper;
-    //add a copper
-    gs.deck[0][gs.deckCount[0]++] = copper;
 
     gsCopy = gs; //store copy
     cardEffect(adventurer, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus); //play card
@@ -92,7 +92,7 @@ int main(){
     checkValue(gs.playedCards[0], adventurer, "played card is adventurer", 1);
 
     gs = gsOrig;
-    printf("Test 3: One treaure card on top of deck, then 20 non treasure cards, then treasure card\n");
+    printf("\nTest 3: One treaure card on top of deck, then 20 non treasure cards, then treasure card\n");
     printf("========================================\n");
     //add a copper
     gs.deck[0][gs.deckCount[0]++] = copper;
