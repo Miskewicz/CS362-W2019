@@ -1,4 +1,4 @@
-#define _XOPEN_SOURCE
+#define _XOPEN_SOURCE //suggestion from https://stackoverflow.com/questions/6491019/struct-sigaction-incomplete-error
 
 #include "dominion.h"
 #include "dominion_helpers.h"
