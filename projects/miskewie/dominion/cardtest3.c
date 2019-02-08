@@ -32,7 +32,7 @@ int main(){
     cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus);
 
     //hand count unchanged (+ 1 card drawn, -1 card played)
-    checkValue(gs.handCount[0], gsCopy.handCount[0] + 1, "hand count unchanged", 1);
+    checkValue(gs.handCount[0], gsCopy.handCount[0], "hand count unchanged", 1);
 
     //deck count - 1
     checkValue(gs.deckCount[0], gsCopy.deckCount[0] - 1, "deck count - 1", 1);
@@ -75,11 +75,14 @@ int main(){
     //deck count is zero
     checkValue(gs.deckCount[0], 0, "zero deck count", 1);
 
+    //discard count is zero
+    checkValue(gs.discardCount[0], 0, "zero discard count", 1);
+
     //drawn card is province
     checkValue(gs.hand[0][gs.handCount[0] - 1], province, "card drawn is province", 1);
 
     //hand count unchanged (+ 1 card drawn, -1 card played)
-    checkValue(gs.handCount[0], gsCopy.handCount[0] + 1, "hand count unchanged", 1);
+    checkValue(gs.handCount[0], gsCopy.handCount[0], "hand count unchanged", 1);
 
     return 0;
 }
