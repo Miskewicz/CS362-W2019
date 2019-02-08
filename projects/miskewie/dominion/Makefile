@@ -81,8 +81,11 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c car
 	echo RUNNING CARD TEST 4 - mine >>unittestresults.out
 	echo "*************************************" >>unittestresults.out
 	./cardtest4 >>unittestresults.out
+	echo >>unittestresults.out
+	echo "*************************************" >>unittestresults.out
 	echo GATHERING CODE COVERAGE >>unittestresults.out
-	gcov dominion.c
+	echo "*************************************" >>unittestresults.out
+	gcov -f -b dominion.c >>unittestresults.out
 	cat dominion.c.gcov >>unittestresults.out
 
 player: player.c interface.o
