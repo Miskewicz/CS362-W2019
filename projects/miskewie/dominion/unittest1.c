@@ -4,6 +4,7 @@
 #include "test_helpers.h"
 
 #include <limits.h>
+#include <stdio.h>
 
 //Unit test for the isGameOver function
 int main(){
@@ -18,16 +19,22 @@ int main(){
     gsOrig = gs;
 
     //beginning of game - isGameOver should return false
+    printf("\nTest 1: Game beginning - no empty piles\n");
+    printf("========================================\n");
     gsCopy = gs;
     checkValue(isGameOver(&gs), 0, "Game Beginning", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
     //set no province left - isGameOver should return True
+    printf("\nTest 2: Zero Provincess - Game should be over\n");
+    printf("========================================\n");
     gs.supplyCount[province] = 0;    
     gsCopy = gs;
-    checkValue(isGameOver(&gs), 1, "No Estates", 1);
+    checkValue(isGameOver(&gs), 1, "No Provinces", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
+    printf("\nTest 3: Empty kingdom piles\n");
+    printf("========================================\n");
     //set 1 empty kingdom card pile - isGameOver should return false
     gs = gsOrig; //reset gameState
     gs.supplyCount[adventurer] = 0;
@@ -47,6 +54,8 @@ int main(){
     checkValue(isGameOver(&gs), 1, "3 Empty Kingdom Pile", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
+    printf("\nTest 4: Empty non-kingdom piles\n");
+    printf("========================================\n");
     //1 empty non kingdom supply pile - isGameOver should return false
     gs = gsOrig; //reset gameState
     gs.supplyCount[curse] = 0;
@@ -66,6 +75,8 @@ int main(){
     checkValue(isGameOver(&gs), 1, "+Empty Duchy Pile", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
+    printf("\nTest 5: Additional empty piles\n");
+    printf("========================================\n");
     //4 empty supply piles - isGameOver should return true
     gs.supplyCount[silver] = 0;
     gsCopy = gs;
@@ -80,6 +91,8 @@ int main(){
     checkValue(isGameOver(&gs), 1, "All empty piles", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
+    printf("\nTest 6: MAX_INT piles\n");
+    printf("========================================\n");
     //all piles max int - isGameOver should return false
     for (i=curse; i<=treasure_map; i++){
         gs.supplyCount[i]=INT_MAX;
