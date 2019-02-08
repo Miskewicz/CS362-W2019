@@ -1,3 +1,5 @@
+#define _XOPEN_SOURCE
+
 #include "dominion.h"
 #include "dominion_helpers.h"
 
@@ -11,7 +13,9 @@
 
 void sig_segv_handler(int sig_num){
     write(1, "SIGSEGV received running program\n", 33);
-    exit;
+    //exit function suggestion from:
+    //https://stackoverflow.com/questions/37829429/sigsegv-handler-can-not-exit
+    _exit(0);
 }
 
 
@@ -28,11 +32,13 @@ int main(){
     struct gameState gsCopy;
 
     // register handler for SIGSEGV
+    //code suggestions from piazza post
     struct sigaction *sa;
     sa = malloc(sizeof(struct sigaction));
     sa->sa_handler = sig_segv_handler;
     sigaction(SIGSEGV, sa, NULL);
 
+    //init game
     initializeGame(2, kCards, 1, &gs);
     
     //add smithy to player 1 hand
