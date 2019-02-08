@@ -63,14 +63,11 @@ void validMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
 //test mine
 int main(){
     int i;
-    int bonus;
-    int result;
 
     //initialize gameState, 2 player game
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
     struct gameState gs;
     struct gameState gsOrig;
-    struct gameState gsCopy;
     initializeGame(2, kCards, 1, &gs);
 
     //add 1 mine to hand

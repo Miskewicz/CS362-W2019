@@ -8,7 +8,6 @@
 
 //test village
 int main(){
-    int i;
     int bonus;
 
     //initialize gameState, 2 player game
