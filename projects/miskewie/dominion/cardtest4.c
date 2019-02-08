@@ -20,7 +20,8 @@ void invalidMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
     //function failure
     checkValue(result, -1, "function should error", 1);
 
-    compareGameState(gs, &gsCopy); //should be no other state change     
+    //if function correctly failed - check and make sure no other state change
+    if (result == -1) compareGameState(gs, &gsCopy);  
 }
 
 
