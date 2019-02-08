@@ -6,7 +6,9 @@
 #include <limits.h>
 #include <stdio.h>
 
-
+//Function that checks the mine results given the provided card to trash and
+// card to gain. Should be used only with parameters that would lead to an INCORRECT
+// use of the Mine card.
 void invalidMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
     struct gameState gsCopy;
     int result;
@@ -24,7 +26,9 @@ void invalidMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
     if (result == -1) compareGameState(gs, &gsCopy);  
 }
 
-
+//Function that checks the mine results given the provided card to trash and
+// card to gain. Should be used only with parameters that would yield a SUCCESSFUL
+// use of the Mine card.
 void validMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
     struct gameState gsCopy;
     int result;
