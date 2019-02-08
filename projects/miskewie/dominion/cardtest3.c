@@ -51,6 +51,8 @@ int main(){
     gsCopy.hand[0][gsCopy.handCount[0] - 1] = province; //replace village with province
     gsCopy.deckCount[0]--;
     gsCopy.numActions += 2;
+    gsCopy.playedCardCount = 1;
+    gsCopy.playedCards[0] = village;
     compareGameState(&gs, &gsCopy); //make sure no other state changes
 
     gsOrig = gs; //save copy

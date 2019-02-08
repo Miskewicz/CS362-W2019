@@ -57,6 +57,8 @@ int main(){
         gsCopy.handCount[0] = gsCopy.handCount[0] + 1;
         gsCopy.hand[0][gsCopy.handCount[0] - 1] = i;
         gsCopy.hand[0][gsCopy.handCount[0] - 2] = i;
+        gsCopy.playedCardCount = 1;
+        gsCopy.playedCards[0] = adventurer;
 
         //make sure no other changes
         compareGameState(&gs, &gsCopy);
