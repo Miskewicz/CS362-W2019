@@ -29,7 +29,7 @@ int main(){
     //add province to top of deck
     gs.deck[0][gs.deckCount[0]++] = province;
     gsCopy = gs;
-    cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus);
+    checkValue(cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus), 0, "function returned success", 0);
 
     //hand count unchanged (+ 1 card drawn, -1 card played)
     checkValue(gs.handCount[0], gsCopy.handCount[0], "hand count unchanged", 1);
@@ -59,7 +59,7 @@ int main(){
     printf("\nTest 2: 999 actions\n");
     printf("========================================\n");
     gs.numActions = 999;
-    cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus);
+    checkValue(cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus), 0, "function returned success", 0);
     checkValue(gs.numActions, 1001, "num actions = 1001", 1);
 
     gs = gsOrig; //save copy
@@ -70,7 +70,7 @@ int main(){
     gs.discard[0][0] = province;
 
     gsCopy = gs;
-    cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus);
+    checkValue(cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus), 0, "function returned success", 0);
 
     //deck count is zero
     checkValue(gs.deckCount[0], 0, "zero deck count", 1);

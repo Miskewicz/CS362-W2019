@@ -33,7 +33,7 @@ int main(){
         gs.deck[0][gs.deckCount[0]++] = i;
 
         gsCopy = gs;
-        cardEffect(adventurer, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus);
+        checkValue(cardEffect(adventurer, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus), 0, "function returned success", 0);
 
         //check hand + 1 cards (+2 treasure, -1 adventurer)
         checkValue(gs.handCount[0], gsCopy.handCount[0] + 1, "hand increased by 1", 1);
@@ -75,7 +75,7 @@ int main(){
     gs.deck[0][gs.deckCount[0]++] = duchy;
 
     gsCopy = gs; //store copy
-    cardEffect(adventurer, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus); //play card
+    checkValue(cardEffect(adventurer, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus), 0, "function returned success", 0); //play card
 
     //check hand + 1 cards (+2 treasure, -1 adventurer)
     checkValue(gs.handCount[0], gsCopy.handCount[0] + 1, "hand increased by 1", 1);
@@ -107,7 +107,7 @@ int main(){
     gs.deck[0][gs.deckCount[0]++] = copper;
 
     gsCopy = gs; //store copy
-    cardEffect(adventurer, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus); //play card
+    checkValue(cardEffect(adventurer, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus), 0, "function returned success", 0); //play card
 
     //check hand + 1 cards (+2 treasure, -1 adventurer)
     checkValue(gs.handCount[0], gsCopy.handCount[0] + 1, "hand increased by 1", 1);
