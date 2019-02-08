@@ -55,14 +55,14 @@ int main(){
     gsCopy.playedCards[0] = village;
     compareGameState(&gs, &gsCopy); //make sure no other state changes
 
-    gsOrig = gs; //save copy
+    gs = gsOrig; //save copy
     printf("\nTest 2: 999 actions\n");
     printf("========================================\n");
     gs.numActions = 999;
     cardEffect(village, 0, 0, 0, &gs, gs.handCount[0] - 1, &bonus);
     checkValue(gs.numActions, 1001, "num actions = 1001", 1);
 
-    gsOrig = gs; //save copy
+    gs = gsOrig; //save copy
     printf("\nTest 3: empty deck, province in discard\n");
     printf("========================================\n");
     gs.deckCount[0] = 0;
