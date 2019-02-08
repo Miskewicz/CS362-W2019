@@ -41,12 +41,13 @@ void validMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
     checkValue(gs->playedCards[0], mine, "played card is mine", 1);
 
     //card gained
-    checkValue(gs->handCount[0], gsCopy.handCount[0], "hand count unchanged", 1);
+    checkValue(gs->handCount[0], gsCopy.handCount[0] - 1, "hand count minus 1", 1);
     checkValue(gs->hand[0][gs->handCount[0] - 1], cardToGain, "gained card is correct", 1);
     checkValue(gs->supplyCount[cardToGain], gsCopy.supplyCount[cardToGain] - 1, "1 less gained card in supply", 1);
 
     //mirror activity in gsCopy
-    gsCopy.hand[0][gsCopy.handCount[0] - 1] = cardToGain;
+    gsCopy.hand[0][gsCopy.handCount[0] - 2] = cardToGain;
+    gsCopy.handCount[0]--;
     gsCopy.playedCardCount = 1;
     gsCopy.playedCards[0] = mine;
     gsCopy.supplyCount[cardToGain]--;
