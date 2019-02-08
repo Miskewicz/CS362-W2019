@@ -5,6 +5,15 @@
 
 #include <limits.h>
 #include <stdio.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void sig_segv_handler(int sig_num){
+    write(1, "SIGSEGV received running program\n", 33);
+    exit;
+}
+
 
 //smithy test
 int main(){
@@ -17,6 +26,13 @@ int main(){
     struct gameState gs;
     struct gameState gsOrig;
     struct gameState gsCopy;
+
+    // register handler for SIGSEGV
+    struct sigaction *sa;
+    sa = malloc(sizeof(struct sigaction));
+    sa->sa_handler = sig_segv_handler;
+    sigaction(SIGSEGV, sa, NULL);
+
     initializeGame(2, kCards, 1, &gs);
     
     //add smithy to player 1 hand
