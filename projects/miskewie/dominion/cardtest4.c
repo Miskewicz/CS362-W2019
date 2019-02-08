@@ -95,7 +95,7 @@ int main(){
     invalidMineTest(&gs, copper, gold);
 
     gs = gsOrig;
-    printf("\nTest 4: Trash non treasure, gain gold - failure\n");
+    printf("\nTest 5: Trash non treasure, gain gold - failure\n");
     printf("========================================\n");
     for (i = curse; i <=treasure_map; i++){
         if (i != copper && i != silver && i != gold){
@@ -104,7 +104,7 @@ int main(){
     }
 
     gs = gsOrig;
-    printf("\nTest 5: Trash copper, gain non treasure - failure\n");
+    printf("\nTest 6: Trash copper, gain non treasure - failure\n");
     printf("========================================\n");
     for (i = curse; i <=treasure_map; i++){
         if (i != copper && i != silver && i != gold){
@@ -113,7 +113,7 @@ int main(){
     }
 
     gs = gsOrig;
-    printf("\nTest 6: Trash copper, gain silver, pile empty - failure\n");
+    printf("\nTest 7: Trash copper, gain silver, pile empty - failure\n");
     printf("========================================\n");
     gs.supplyCount[silver] = 0;
     invalidMineTest(&gs, copper, silver);
