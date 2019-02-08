@@ -15,24 +15,25 @@ int main(){
     //initialize gameState, 2 player game
     int kCards[10] = {adventurer, council_room, feast, gardens, mine, remodel, smithy, village, baron, great_hall};
     struct gameState gs;
-    //struct gameState gsOrig;
+    struct gameState gsOrig;
     struct gameState gsCopy;
     initializeGame(2, kCards, 1, &gs);
-    //gsOrig = gs;
-
+    
     //add smithy to player 1 hand
     gs.whoseTurn = 0;
     gs.hand[0][gs.handCount[0]++] = smithy;
+    gsOrig = gs;
 
     //play smithy with more than three cards in deck
+    printf("\nTest 1: Normal smithy play - deck has more than 3 cards\n");
+    printf("========================================\n");
+    //ensure deck has more than three cards
     while (gs.deckCount[0] < 3){
         gs.deck[0][gs.deckCount[0]++] = copper;
     }
     gsCopy = gs;
-
-    printf("Starting hand:\n");
-    debugPrintPlayerHand(&gs, 0);
-
+    //printf("Starting hand:\n"); //debug printing
+    //debugPrintPlayerHand(&gs, 0);
     cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus);
 
     //check handCount up 2 (+3 cards - 1 Smithy)
@@ -60,6 +61,29 @@ int main(){
     gsCopy.handCount[0] = 0;
     gs.handCount[0] = 0;
     compareGameState(&gs, &gsCopy);
+
+    printf("\nTest 2: No cards in deck - three cards in discard\n");
+    printf("========================================\n");
+    //empty deck and add three copper to discard
+    gs = gsOrig;
+    gs.deckCount[0] = 0;
+    gs.discardCount[0] = 3;
+    for (i = 0; i < 3; i ++){
+        gs.discard[0][i] = copper;
+    }
+    gsCopy = gs;
+    cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus);
+
+    //check handCount up 2 (+3 cards - 1 Smithy)
+    checkValue(gs.handCount[0], gsCopy.handCount[0] + 2, "hand count up 2", 1);
+
+    //cards drawn from discard being reshuffled
+    checkValue(gs.discardCount[0], 0, "discard now empty", 1);
+
+    //three cards drawn are copper
+    checkValue(gs.hand[0][gs.handCount[0] - 1], copper, "first drawn card is copper", 1);
+    checkValue(gs.hand[0][gs.handCount[0] - 2], copper, "second drawn card is copper", 1);
+    checkValue(gs.hand[0][gs.handCount[0] - 3], copper, "third drawn card is copper", 1);
 
     return 0;
 }
