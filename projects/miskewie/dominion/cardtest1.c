@@ -34,7 +34,7 @@ int main(){
     gsCopy = gs;
     //printf("Starting hand:\n"); //debug printing
     //debugPrintPlayerHand(&gs, 0);
-    cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus);
+    checkValue(cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus), 0, "function returned success", 0);
 
     //check handCount up 2 (+3 cards - 1 Smithy)
     checkValue(gs.handCount[0], gsCopy.handCount[0] + 2, "hand count up 2", 1);
@@ -72,7 +72,7 @@ int main(){
         gs.discard[0][i] = copper;
     }
     gsCopy = gs;
-    cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus);
+    checkValue(cardEffect(smithy, 0, 0, 0, &gs, gs.handCount[0]-1, &bonus), 0, "function returned success", 0);
 
     //check handCount up 2 (+3 cards - 1 Smithy)
     checkValue(gs.handCount[0], gsCopy.handCount[0] + 2, "hand count up 2", 1);
