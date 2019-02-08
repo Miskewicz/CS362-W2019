@@ -20,6 +20,7 @@ int main(){
     initializeGame(2, kCards, 1, &gs);
 
     //add 1 adventurer to hand
+    gs.whoseTurn = 0;
     gs.hand[0][gs.handCount[0]++] = adventurer;
     gsOrig = gs; //save copy
 
