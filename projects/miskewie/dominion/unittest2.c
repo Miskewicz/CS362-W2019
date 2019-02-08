@@ -11,16 +11,18 @@ void checkAllEmpty(struct gameState* gs){
     int i;
     struct gameState gsCopy;
     for (i = 0; i < MAX_PLAYERS; i++){
+        //initialize hand/discard/deck counts to 0
         gs->handCount[i] = 0;
         gs->discardCount[i] = 0;
         gs->deckCount[i] = 0;
-        gsCopy = *gs;
+        gsCopy = *gs; //store state copy
         checkValue(scoreFor(i, gs), 0, "Empty deck, hand, and discard", 1);
         compareGameState(gs, &gsCopy); //should be no state change
     }
 }
 
-//single card in hande
+//Add a single card to each players hand and check the player's score.
+//c specifies which card to add
 int checkSingleInHand(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     struct gameState gsCopy;
@@ -38,7 +40,8 @@ int checkSingleInHand(struct gameState* gs, int c, int expectedScore, char* msg)
     return 1;
 }
 
-//single card in discard pile
+//Add a single card to each players discard and check the player's score.
+//c specifies which card to add
 int checkSingleInDiscard(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     struct gameState gsCopy;
@@ -56,7 +59,8 @@ int checkSingleInDiscard(struct gameState* gs, int c, int expectedScore, char* m
     return 1;
 }
 
-//single card in deck
+//Add a single card to each players deck and check the player's score.
+//c specifies which card to add
 int checkSingleInDeck(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     struct gameState gsCopy;
@@ -74,7 +78,9 @@ int checkSingleInDeck(struct gameState* gs, int c, int expectedScore, char* msg)
     return 1;
 }
 
-//all full of the same card - if estate, the score should be MAX_HAND + MAX_DECK*2
+//fill hand/discard/deck full of the same card and check expected score
+//c specifies which card to add
+// as an example, if estate, the score should be MAX_HAND + MAX_DECK*2
 void checkAllFull(struct gameState* gs, int c, int expectedScore, char* msg){
     int i;
     int j;
@@ -102,6 +108,7 @@ void checkAllFull(struct gameState* gs, int c, int expectedScore, char* msg){
 }
 
 //returns the card score for a SINGLE copy of the card
+// note gardens will return 0 - does not take into account deck size
 int getCardScore(int c){
     switch(c){
         case estate:
@@ -119,7 +126,6 @@ int getCardScore(int c){
     }
 }
 
-
 //Unit tests for the scoreFor function
 int main(){
     int i;
@@ -132,9 +138,13 @@ int main(){
     initializeGame(2, kCards, 1, &gs);
     gsOrig = gs;
 
+    printf("\nTest 1: Zero cards for each player\n");
+    printf("========================================\n");
     checkAllEmpty(&gs); //check with all empty piles - score should be 0
 
 
+    printf("\nTest 2: Each card's individual score - hand/discard/deck\n");
+    printf("========================================\n");
     //check single card in hand
     for (i = curse; i <= treasure_map; i++){
         sprintf(buffer, "single card in hand id: %i", i);
@@ -159,10 +169,14 @@ int main(){
         }
     }
 
+    printf("\nTest 3: Full decks and hand\n");
+    printf("========================================\n");
     //check for full discard, hand, and deck
     gs = gsOrig;
     checkAllFull(&gs, estate, MAX_HAND + MAX_DECK*2, "All full of estates");
 
+    printf("\nTest 4: Gardens tests\n");
+    printf("========================================\n");
     //verify gardens - 9 cards should be 0 points
     gs = gsOrig;
     gs.deckCount[0] = 1;
