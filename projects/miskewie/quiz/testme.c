@@ -11,6 +11,7 @@ char inputChar()
   return ' ' + rand() % 95;
 }
 
+//generates a random char for the inputString function
 char inputCharForString()
 {
   char c;
