@@ -9,15 +9,15 @@
 //Function that checks the mine results given the provided card to trash and
 // card to gain. Should be used only with parameters that would lead to an INCORRECT
 // use of the Mine card.
-void invalidMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
+void invalidMineTest(struct gameState* gs, int cardToTrash, int cardToGain, int player){
     struct gameState gsCopy;
     int result;
     int bonus;
 
     //add card to hand
-    gs->hand[0][gs->handCount[0]++] = cardToTrash;
+    gs->hand[player][gs->handCount[player]++] = cardToTrash;
     gsCopy = *gs;
-    result = cardEffect(mine, gs->handCount[0] - 1, cardToGain, 0, gs, gs->handCount[0] - 2, &bonus);
+    result = cardEffect(mine, gs->handCount[player] - 1, cardToGain, 0, gs, gs->handCount[player] - 2, &bonus);
 
     //function failure
     checkValue(result, -1, "function should error", 1);
@@ -29,14 +29,17 @@ void invalidMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
 //Function that checks the mine results given the provided card to trash and
 // card to gain. Should be used only with parameters that would yield a SUCCESSFUL
 // use of the Mine card.
-void validMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
+void validMineTest(struct gameState* gs, int cardToTrash, int cardToGain, int player){
     struct gameState gsCopy;
     int result;
     int bonus;
+
+    printf("Running valid mine test for player %i\n", player);
+
     //add card to hand
-    gs->hand[0][gs->handCount[0]++] = cardToTrash;
+    gs->hand[player][gs->handCount[player]++] = cardToTrash;
     gsCopy = *gs;
-    result = cardEffect(mine, gs->handCount[0] - 1, cardToGain, 0, gs, gs->handCount[0] - 2, &bonus);
+    result = cardEffect(mine, gs->handCount[player] - 1, cardToGain, 0, gs, gs->handCount[player] - 2, &bonus);
 
     //function success
     checkValue(result, 0, "no error in function", 1);
@@ -46,13 +49,13 @@ void validMineTest(struct gameState* gs, int cardToTrash, int cardToGain){
     checkValue(gs->playedCards[0], mine, "played card is mine", 1);
 
     //card gained
-    checkValue(gs->handCount[0], gsCopy.handCount[0] - 1, "hand count minus 1", 1);
-    checkValue(gs->hand[0][gs->handCount[0] - 1], cardToGain, "gained card is correct", 1);
+    checkValue(gs->handCount[player], gsCopy.handCount[player] - 1, "hand count minus 1", 1);
+    checkValue(gs->hand[player][gs->handCount[player] - 1], cardToGain, "gained card is correct", 1);
     checkValue(gs->supplyCount[cardToGain], gsCopy.supplyCount[cardToGain] - 1, "1 less gained card in supply", 1);
 
     //mirror activity in gsCopy
-    gsCopy.hand[0][gsCopy.handCount[0] - 2] = cardToGain;
-    gsCopy.handCount[0]--;
+    gsCopy.hand[player][gsCopy.handCount[0] - 2] = cardToGain;
+    gsCopy.handCount[player]--;
     gsCopy.playedCardCount = 1;
     gsCopy.playedCards[0] = mine;
     gsCopy.supplyCount[cardToGain]--;
@@ -76,48 +79,50 @@ int main(){
     gsOrig = gs; //save copy
 
 
-    printf("\nTest 1: Trash copper, gain silver - success\n");
+    printf("\nTest 1: Trash copper, gain silver - each player\n");
     printf("========================================\n");
-    validMineTest(&gs, copper, silver);
+    for (i = 0; i < MAX_PLAYERS; i++){
+        validMineTest(&gs, copper, silver, i);
+    }
 
     gs = gsOrig;
-    printf("\nTest 2: Trash silver, gain gold - success\n");
+    printf("\nTest 2: Trash silver, gain gold\n");
     printf("========================================\n");
-    validMineTest(&gs, silver, gold);
+    validMineTest(&gs, silver, gold, 0);
 
     gs = gsOrig;
-    printf("\nTest 3: Trash gold, gain copper - success\n");
+    printf("\nTest 3: Trash gold, gain copper\n");
     printf("========================================\n");
-    validMineTest(&gs, gold, copper);
+    validMineTest(&gs, gold, copper, 0);
 
     gs = gsOrig;
-    printf("\nTest 4: Trash copper, gain gold - failure\n");
+    printf("\nTest 4: Trash copper, gain gold\n");
     printf("========================================\n");
-    invalidMineTest(&gs, copper, gold);
+    invalidMineTest(&gs, copper, gold, 0);
 
     gs = gsOrig;
-    printf("\nTest 5: Trash non treasure, gain gold - failure\n");
+    printf("\nTest 5: Trash non treasure, gain gold\n");
     printf("========================================\n");
     for (i = curse; i <=treasure_map; i++){
         if (i != copper && i != silver && i != gold){
-            invalidMineTest(&gs, i, gold);
+            invalidMineTest(&gs, i, gold, 0);
         }
     }
 
     gs = gsOrig;
-    printf("\nTest 6: Trash copper, gain non treasure - failure\n");
+    printf("\nTest 6: Trash copper, gain non treasure\n");
     printf("========================================\n");
     for (i = curse; i <=treasure_map; i++){
         if (i != copper && i != silver && i != gold){
-            invalidMineTest(&gs, copper, i);
+            invalidMineTest(&gs, copper, i, 0);
         }
     }
 
     gs = gsOrig;
-    printf("\nTest 7: Trash copper, gain silver, pile empty - failure\n");
+    printf("\nTest 7: Trash copper, gain silver, pile empty\n");
     printf("========================================\n");
     gs.supplyCount[silver] = 0;
-    invalidMineTest(&gs, copper, silver);
+    invalidMineTest(&gs, copper, silver, 0);
 
     return 0;
 }
