@@ -13,8 +13,30 @@ char inputChar()
 
 char inputCharLowerCase()
 {
+  char c;
+  int randomInt;
+
+  randomInt = rand() % 4;
+  switch (randomInt){
+    case 0:
+      c = 'r';
+      break;
+    case 1:
+      c = 'e';
+      break;
+    case 2:
+      c = 's';
+      break;
+    case 3:
+      c = 't';
+      break;
+  }
+
+  return c;
+  
+  //***** below disabled due to time constraint *******
   // returns a random character between 'a' and 'z'
-  return 'a' + rand() % 26;
+  //return 'a' + rand() % 26;
 }
 
 char *inputString()
