@@ -8,7 +8,7 @@
 /* checkValue 
 Simple function to compare two integers and output a message.
 Takes two integers and a message string. The string will be output
-with either SUCCESS or FAILURE if the the two provided integers are
+with either SUCCESS or FAILURE if the two provided integers are
 the same or different.
 
 Will return 1 if the same, 0 if different.

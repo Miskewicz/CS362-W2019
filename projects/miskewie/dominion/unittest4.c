@@ -60,7 +60,7 @@ int main(){
     checkValue(fullDeckCount(0, adventurer, &gs), 1, "one copy of card in deck", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
-    printf("\nTest 2: One copy of card in each deck - each player\n");
+    printf("\nTest 3: One copy of card in each deck - each player\n");
     printf("========================================\n");
     //one copy in hand+discard+deck - should return 3 - check for each player
     for (i = 0; i < MAX_PLAYERS; i++){
@@ -76,7 +76,7 @@ int main(){
         compareGameState(&gs, &gsCopy); //should be no state change
     }
 
-    printf("\nTest 3: Full decks\n");
+    printf("\nTest 4: Full decks\n");
     printf("========================================\n");
     //MAX_DECK deck/discard + MAX_HAND hand - should return MAX_DECK*2 + MAX_HAND
     gs = gsOrig;
@@ -94,7 +94,7 @@ int main(){
     checkValue(fullDeckCount(0, adventurer, &gs), MAX_DECK*2 + MAX_HAND, "one copy of card in hand+discard+deck", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
-    printf("\nTest 4: check for card not present\n");
+    printf("\nTest 5: check for card not present\n");
     printf("========================================\n");
     //cards in hand/discard/deck, check for card not present - should return 0
     gs = gsOrig;
@@ -112,7 +112,7 @@ int main(){
     checkValue(fullDeckCount(0, adventurer, &gs), 0, "one of every card in hand+discard+deck except check card", 1);
     compareGameState(&gs, &gsCopy); //should be no state change
 
-    printf("\nTest 5: decks filled with one of every card\n");
+    printf("\nTest 6: decks filled with one of every card\n");
     printf("========================================\n");
     //cards in hand/discard/deck, one copy of card to check for in each - should return 3
     gs.hand[0][gs.handCount[0]++] = adventurer;
