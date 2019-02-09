@@ -16,6 +16,7 @@ void invalidMineTest(struct gameState* gs, int cardToTrash, int cardToGain, int 
 
     //add card to hand
     gs->hand[player][gs->handCount[player]++] = cardToTrash;
+    gs->whoseTurn = player;
     gsCopy = *gs;
     result = cardEffect(mine, gs->handCount[player] - 1, cardToGain, 0, gs, gs->handCount[player] - 2, &bonus);
 
@@ -38,6 +39,7 @@ void validMineTest(struct gameState* gs, int cardToTrash, int cardToGain, int pl
 
     //add card to hand
     gs->hand[player][gs->handCount[player]++] = cardToTrash;
+    gs->whoseTurn = player;
     gsCopy = *gs;
     result = cardEffect(mine, gs->handCount[player] - 1, cardToGain, 0, gs, gs->handCount[player] - 2, &bonus);
 
