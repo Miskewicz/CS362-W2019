@@ -32,6 +32,8 @@ runtests: testDrawCard
 test_helpers.o: test_helpers.h test_helpers.c dominion.o
 	gcc -c test_helpers.c dominion.o rngs.o
 
+.IGNORE: unittestresults
+
 unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c cardtest1.c cardtest2.c cardtest3.c cardtest4.c dominion.o rngs.o test_helpers.o
 	gcc -o unittest1 unittest1.c dominion.o rngs.o test_helpers.o $(CFLAGS)
 	echo >>unittestresults.out
