@@ -11,7 +11,7 @@ char inputChar()
   return ' ' + rand() % 95;
 }
 
-char inputCharLowerCase()
+char inputCharForString()
 {
   char c;
   int randomInt;
@@ -47,7 +47,7 @@ char *inputString()
   length = 5;
 
   for (i = 0; i < length; i++){
-    stringBuffer[i] = inputCharLowerCase();
+    stringBuffer[i] = inputCharForString();
   }
   stringBuffer[i] = '\0';
   return stringBuffer;
