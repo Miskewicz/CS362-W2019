@@ -33,6 +33,10 @@ randomtestcard1: randomtestcard1.c test_helpers.c random_test_helpers.c dominion
 	gcc -o randomtestcard1 randomtestcard1.c test_helpers.c random_test_helpers.c dominion.o rngs.o $(CFLAGS)
 	./randomtestcard1 >randomtestcard1.out
 
+randomtestcard2: randomtestcard2.c test_helpers.c random_test_helpers.c dominion.o rngs.o
+	gcc -o randomtestcard2 randomtestcard2.c test_helpers.c random_test_helpers.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard2 >randomtestcard2.out
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
