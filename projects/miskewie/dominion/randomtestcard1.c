@@ -23,10 +23,16 @@ void printTestInfo(struct gameState* gs, int testNum, int success){
 int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
     int player = whoseTurn(gsNew);
     int success = 1;
+
+    //check handsize matches simulated handsize
     success = success && checkValue(gsNew->handCount[player], gsOrig->handCount[player], "Hand size", 0);
+    
+    //check total deck+discard count matches simulated deck+discard count
     success = success && checkValue(gsNew->deckCount[player] + gsNew->discardCount[player], 
-            gsOrig->deckCount[player]+gsOrig->discardCount[player] - 1, "total deck+discard", 0);
-    success = success && checkValue(gsNew->numActions, gsOrig->numActions + 2, "Number of Actions", 0);
+            gsOrig->deckCount[player]+gsOrig->discardCount[player], "total deck+discard", 0);
+    
+    //check numActions matches simulated numActions
+    success = success && checkValue(gsNew->numActions, gsOrig->numActions, "Number of Actions", 0);
 
     return(success);
 }
