@@ -8,6 +8,8 @@
 int randBetween(int, int);
 int getRandomCard();
 
+int addCardToHand(struct gameState* gs, int player, int card);
+
 void randomizeSupply(struct gameState*);
 void randomizePlayedCards(struct gameState*);
 void randomizeDiscard(struct gameState*, int);
