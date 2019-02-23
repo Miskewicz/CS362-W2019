@@ -11,6 +11,24 @@ int getRandomCard(){
     return(randBetween(curse, treasure_map));
 }
 
+int addCardToHand(struct gameState* gs, int player, int card){
+    int handPos;
+
+    //if there are NO cards in hand, add it to the player's hand as the only card
+    if (gs->handCount[player] == 0){
+        gs->handCount[player] = 1;
+        gs->hand[player][0] = card;
+        return 0;
+    }
+    //otherwise replace a random card in the hand with the desired card
+    else {
+        handPos = randBetween(0, gs->handCount[player] - 1);
+        gs->hand[player][handPos] = card;
+        return handPos;
+    }
+}
+
+
 void randomizeSupply(struct gameState* gs){
     int i;
     for(i = curse; i <= treasure_map; i++){
