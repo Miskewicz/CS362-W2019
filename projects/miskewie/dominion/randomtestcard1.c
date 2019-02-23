@@ -22,12 +22,13 @@ void printTestInfo(struct gameState* gs, int testNum, int success){
 
 int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
     int player = whoseTurn(gsNew);
-    return(
-        checkValue(gsNew->handCount[player], gsOrig->handCount[player], "Hand size", 0) &&
-        checkValue(gsNew->deckCount[player] + gsNew->discardCount[player], 
-            gsOrig->deckCount[player]+gsOrig->discardCount[player] - 1, "total deck+discard", 0) &&
-        checkValue(gsNew->numActions, gsOrig->numActions + 2, "Number of Actions", 0)
-    );
+    int success = 1;
+    success = success && checkValue(gsNew->handCount[player], gsOrig->handCount[player], "Hand size", 0);
+    success = success && checkValue(gsNew->deckCount[player] + gsNew->discardCount[player], 
+            gsOrig->deckCount[player]+gsOrig->discardCount[player] - 1, "total deck+discard", 0);
+    success = success && checkValue(gsNew->numActions, gsOrig->numActions + 2, "Number of Actions", 0);
+
+    return(success);
 }
 
 void simulateVillageEffect(struct gameState* gs, int handPos){
