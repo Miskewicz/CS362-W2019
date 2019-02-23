@@ -14,7 +14,8 @@ void printTestInfo(struct gameState* gs, int testNum, int success, int trashCard
     int trashCard = gs->hand[whoseTurn(gs)][trashCardPos];
     
     if (success){
-        printf("Test Success #%i : ", testNum);
+        //printf("Test Success #%i : ", testNum);
+        return;
     } else {
         printf("******* Test Failed #%i : ", testNum);
     }
