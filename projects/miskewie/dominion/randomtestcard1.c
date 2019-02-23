@@ -94,7 +94,7 @@ int main(){
             success = compareGameState(&gs, &gsCopy);
             printTestInfo(&gsOrig, i, success);
         } else {
-            success = checkGameStateBasic(&gs, &gsCopy)
+            success = checkGameStateBasic(&gs, &gsCopy);
             printTestInfo(&gsOrig, i, success);
         }
         if (success) successNum++;
