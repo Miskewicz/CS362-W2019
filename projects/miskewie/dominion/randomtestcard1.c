@@ -9,6 +9,7 @@
 
 #define NUM_TESTS 10000
 
+// print relevant values of the gameState input parameters
 void printTestInfo(struct gameState* gs, int testNum, int success){
     if (success){
         printf("Test Success #%i : ", testNum);
@@ -20,6 +21,10 @@ void printTestInfo(struct gameState* gs, int testNum, int success){
     printf("Input DeckCount = %i\n", gs->deckCount[whoseTurn(gs)]);
 }
 
+// check that the basic functionality of village matches how the simulated gameState
+// was altered. This function is used when the deckCount is 0, so the drawn card must
+// be taken from a reshuffled discard. Given that the reshuffling is randomized - we can
+// only verify these basic values in this instance. 
 int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
     int player = whoseTurn(gsNew);
     int success = 1;
@@ -37,6 +42,8 @@ int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
     return(success);
 }
 
+// basic simulation of village effect
+// does not handle reshuffling discard pile
 void simulateVillageEffect(struct gameState* gs, int handPos){
     int player = whoseTurn(gs);
 
