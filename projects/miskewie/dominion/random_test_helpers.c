@@ -11,6 +11,17 @@ int getRandomCard(){
     return(randBetween(curse, treasure_map));
 }
 
+
+int randomActivePlayer(struct gameState* gs){
+    int activePlayer;
+
+    activePlayer = randBetween(0, gs->numPlayers - 1);
+    gs->whoseTurn = activePlayer;
+
+    return activePlayer;
+}
+
+
 int addCardToHand(struct gameState* gs, int player, int card){
     int handPos;
 
