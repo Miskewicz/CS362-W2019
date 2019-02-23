@@ -7,14 +7,41 @@
 #include <stdlib.h>
 
 
+void printTestInfo(struct gameState* gs, int testNum, int success){
+    if (success){
+        printf("Test Success #%i : ", testNum);
+    } else {
+        printf("******* Test Failed #%i : ", testNum);
+    }
+    printf("Input #Actions = %i | ", gs->numActions);
+    printf("Input HandCount = %i | ", gs->handCount[whoseTurn(gs)]);
+    printf("Input DeckCount = %i\n", gs->deckCount[whoseTurn(gs)]);
+}
+
+int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
+    int player = whoseTurn(gsNew);
+    return(
+        checkValue(gsNew->handCount[player], gsOrig->handCount[player], "Hand size", 0) &&
+        checkValue(gsNew->deckCount[player] + gsNew->discardCount[player], 
+            gsOrig->deckCount[player]+gsOrig->discardCount[player] - 1, "total deck+discard", 0) &&
+        checkValue(gsNew->numActions, gsOrig->numActions + 2, "Number of Actions", 0)
+    );
+}
+
 void simulateVillageEffect(struct gameState* gs, int handPos){
     int player = whoseTurn(gs);
 
     //draw card
-    //replace the village card slot with the top card of deck
-    //can do this since the comparison function doesn't care about order of cards in hand
-    gs->hand[player][handPos] = gs->deck[player][--gs->deckCount[player]];
-
+    if (gs->deckCount[player] > 0){
+        //replace the village card slot with the top card of deck
+        //can do this since the comparison function doesn't care about order of cards in hand
+        gs->hand[player][handPos] = gs->deck[player][--gs->deckCount[player]];
+    } else {
+        //no cards in deck - just take the top card of discard
+        if(gs->discardCount[player] > 0){
+            gs->hand[player][handPos] = gs->discard[player][--gs->discardCount[player]];
+        }
+    }
     //add two actions
     gs->numActions += 2;
 
@@ -55,13 +82,11 @@ int main(){
         //simulate effect in copy
         simulateVillageEffect(&gsCopy, handPos);
 
-        //verify gameStates match
-        if (!compareGameState(&gs, &gsCopy)){
-            printf("========= Test Failed #%i ==========\n", i);
-            printf("Input #Actions = %i\n", gsOrig.numActions);
-            printf("Input HandCount = %i\n", gsOrig.handCount[activePlayer]);
-            printf("Input DeckCount = %i\n", gsOrig.deckCount[activePlayer]);
-            printf("====================================\n");
+        //verify gameStates match - can do a more complete check if no reshuffle was necessary
+        if (gsOrig.deckCount[activePlayer] > 0){
+            printTestInfo(&gsOrig, i, compareGameState(&gs, &gsCopy));
+        } else {
+            printTestInfo(&gsOrig, i, checkGameStateBasic(&gs, &gsCopy));
         }
     }
 
