@@ -107,6 +107,7 @@ int main(){
         //check if function gave correct result
         if (actualResult != expectedResult){
             success = 0;
+            printf("Result: %i ; Exptected: %i  ", actualResult, expectedResult);
             printTestInfo(&gsOrig, i, success, trashSelection, gainSelection);
         } else {
             //if function gave correct result - check gameState
