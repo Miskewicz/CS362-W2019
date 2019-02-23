@@ -7,6 +7,8 @@
 #include <stdlib.h>
 
 
+#define NUM_TESTS 10000
+
 void printTestInfo(struct gameState* gs, int testNum, int success){
     if (success){
         printf("Test Success #%i : ", testNum);
@@ -32,16 +34,20 @@ void simulateVillageEffect(struct gameState* gs, int handPos){
     int player = whoseTurn(gs);
 
     //draw card
-    if (gs->deckCount[player] > 0){
-        //replace the village card slot with the top card of deck
-        //can do this since the comparison function doesn't care about order of cards in hand
-        gs->hand[player][handPos] = gs->deck[player][--gs->deckCount[player]];
-    } else {
-        //no cards in deck - just take the top card of discard
-        if(gs->discardCount[player] > 0){
-            gs->hand[player][handPos] = gs->discard[player][--gs->discardCount[player]];
+    //only draw if less than MAX_HAND
+    if (gs->handCount[player] < MAX_HAND){
+        if (gs->deckCount[player] > 0){
+            //replace the village card slot with the top card of deck
+            //can do this since the comparison function doesn't care about order of cards in hand
+            gs->hand[player][handPos] = gs->deck[player][--gs->deckCount[player]];
+        } else {
+            //no cards in deck - just take the top card of discard
+            if(gs->discardCount[player] > 0){
+                gs->hand[player][handPos] = gs->discard[player][--gs->discardCount[player]];
+            }
         }
     }
+
     //add two actions
     gs->numActions += 2;
 
@@ -54,13 +60,14 @@ void simulateVillageEffect(struct gameState* gs, int handPos){
 int main(){
 
     int i;
-    int NUM_TESTS = 10;
     struct gameState gs;
     struct gameState gsCopy;
     struct gameState gsOrig;
     int activePlayer;
     int handPos;
     int bonus;
+    int successNum = 0;
+    int success;
 
     for(i = 0; i < NUM_TESTS; i++){
         //randomize gameState
@@ -84,11 +91,19 @@ int main(){
 
         //verify gameStates match - can do a more complete check if no reshuffle was necessary
         if (gsOrig.deckCount[activePlayer] > 0){
-            printTestInfo(&gsOrig, i, compareGameState(&gs, &gsCopy));
+            success = compareGameState(&gs, &gsCopy);
+            printTestInfo(&gsOrig, i, success);
         } else {
-            printTestInfo(&gsOrig, i, checkGameStateBasic(&gs, &gsCopy));
+            success = checkGameStateBasic(&gs, &gsCopy)
+            printTestInfo(&gsOrig, i, success);
         }
+        if (success) successNum++;
     }
+
+    printf("================================\n");
+    printf("======== TESTS COMPLETE ========\n");
+    printf("  %i / %i Passed\n", successNum, NUM_TESTS);
+    printf("================================\n\n");
 
     return 0;
 }
