@@ -1,6 +1,7 @@
 #include "dominion.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 int randBetween(int min, int max){
