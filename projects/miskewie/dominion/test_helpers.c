@@ -61,10 +61,10 @@ int compareGameStatePlayerHand(struct gameState* a, struct gameState* b, int pla
     for (i=0;i<=treasure_map;i++){
         if(allCardsA[i] != allCardsB[i]){
             printf("FAILURE - card count in hand different for %i | Actual: %i, Expected: %i\n", i, allCardsA[i], allCardsB[i]);
-            printf("Actual Hand:\n");
-            debugPrintPlayerHand(a, player);
-            printf("Expected Hand:\n");
-            debugPrintPlayerHand(b, player);
+            //printf("Actual Hand:\n");
+            //debugPrintPlayerHand(a, player);
+            //printf("Expected Hand:\n");
+            //debugPrintPlayerHand(b, player);
             return 0;
         }
     }
