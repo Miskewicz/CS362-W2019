@@ -22,7 +22,7 @@ int randomActivePlayer(struct gameState* gs){
 }
 
 
-int addCardToHand(struct gameState* gs, int player, int card){
+int addCardToHandRandom(struct gameState* gs, int player, int card){
     int handPos;
 
     //if there are NO cards in hand, add it to the player's hand as the only card
