@@ -11,16 +11,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
+#include <setjmp.h>
 
 #define NUM_TESTS 100
 
-volatile int timeout;
+jmp_buf buffer;
 
 void timeoutCatch(){
-    timeout = 1;
+    longjmp(buffer, 1);
 }
-
 
 int treasureCountTotal(struct gameState* gs){
     int i;
@@ -130,34 +129,22 @@ int main(){
         gsCopy = gs;
         gsOrig = gs;
 
-        //spawn new process to run the card effect
-        pid = fork();
+        //jump point for signal catcher
+        if (setjmp(buffer) != 0){
+            printf("FAILURE - Function Timeout\n");
+            success = 0;
+            printTestInfo(&gsOrig, i, success);
+        }
+        else {
+            alarm(5); //set a timer to catch infinite loop
 
-        //child
-        if(pid == 0){
             //run the effect
             cardEffect(adventurer, 0, 0, 0, &gs, handPos, &bonus);
-            exit(0);
-        //parent
-        } else {
-            timeout = 0;
-            alarm(5); //set a timer to catch infinite loop
-            wait(NULL);
             alarm(0); //remove timer
 
-            if (timeout){
-                printf("FAILURE - Function Timeout");
-                kill(pid, SIGKILL); //kill the hung up child process
-                success = 0;
-                printTestInfo(&gsOrig, i, success);
-            } else { //function did not timeout - just rerun to get results
-
-                //run the effect
-                cardEffect(adventurer, 0, 0, 0, &gs, handPos, &bonus);
-
-                success = checkGameStateBasic(&gs, &gsCopy);
-                printTestInfo(&gsOrig, i, success); 
-            }
+            //function did not timeout
+            success = checkGameStateBasic(&gs, &gsCopy);
+            printTestInfo(&gsOrig, i, success); 
         }
         if (success) successNum++;
     }
