@@ -41,6 +41,12 @@ randomtestcard2: randomtestcard2.c test_helpers.c random_test_helpers.c dominion
 	gcov -f -b dominion.c >>randomtestcard2.out
 	cat dominion.c.gcov >>randomtestcard2.out
 
+randomtestadventurer: randomtestadventurer.c test_helpers.c random_test_helpers.c dominion.o rngs.o
+	gcc -o randomtestadventurer randomtestadventurer.c test_helpers.c random_test_helpers.c dominion.o rngs.o $(CFLAGS)
+	./randomtestadventurer >randomtestadventurer.out
+	gcov -f -b dominion.c >>randomtestadventurer.out
+	cat dominion.c.gcov >>randomtestadventurer.out
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
