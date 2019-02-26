@@ -111,7 +111,6 @@ int main(){
     int bonus;
     int successNum = 0;
     int success;
-    int pid;
 
     //signal(SIGALRM, timeoutCatch);//set a handler to catch alarms for infinite loops
 
