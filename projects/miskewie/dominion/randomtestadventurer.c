@@ -113,7 +113,7 @@ int main(){
     int success;
     int pid;
 
-    signal(SIGALRM, timeoutCatch);//set a handler to catch alarms for infinite loops
+    //signal(SIGALRM, timeoutCatch);//set a handler to catch alarms for infinite loops
 
     for(i = 0; i < NUM_TESTS; i++){
         //randomize gameState
@@ -130,22 +130,22 @@ int main(){
         gsOrig = gs;
 
         //jump point for signal catcher
-        if (setjmp(buffer) != 0){
-            printf("FAILURE - Function Timeout\n");
-            success = 0;
-            printTestInfo(&gsOrig, i, success);
-        }
-        else {
-            alarm(5); //set a timer to catch infinite loop
+        // if (setjmp(buffer) != 0){
+        //     printf("FAILURE - Function Timeout\n");
+        //     success = 0;
+        //     printTestInfo(&gsOrig, i, success);
+        // }
+        // else {
+            //alarm(5); //set a timer to catch infinite loop
 
             //run the effect
             cardEffect(adventurer, 0, 0, 0, &gs, handPos, &bonus);
-            alarm(0); //remove timer
+            //alarm(0); //remove timer
 
             //function did not timeout
             success = checkGameStateBasic(&gs, &gsCopy);
             printTestInfo(&gsOrig, i, success); 
-        }
+        // }
         if (success) successNum++;
     }
 
