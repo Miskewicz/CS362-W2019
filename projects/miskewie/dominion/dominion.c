@@ -651,7 +651,7 @@ int cardEffectAdventurer(struct gameState *state){
   int drawntreasure=0;
   int cardDrawn;
   int currentPlayer = whoseTurn(state);
-  int temphand[5];
+  int temphand[MAX_DECK*2];
   int z = 0;// this is the counter for the temp hand
   while(drawntreasure<2){
     if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
