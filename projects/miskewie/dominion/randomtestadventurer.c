@@ -3,15 +3,8 @@
 #include "random_test_helpers.h"
 #include "test_helpers.h"
 
-//https://stackoverflow.com/questions/9994530/warning-implicit-declaration-of-function-kill
-#define _POSIX_SOURCE
-#include <sys/types.h>
 #include <stdio.h>
-#include <signal.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <setjmp.h>
 
 #define NUM_TESTS 10000
 
