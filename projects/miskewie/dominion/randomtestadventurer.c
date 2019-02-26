@@ -15,12 +15,6 @@
 
 #define NUM_TESTS 10000
 
-jmp_buf buffer;
-
-void timeoutCatch(){
-    longjmp(buffer, 1);
-}
-
 int treasureCountTotal(struct gameState* gs){
     int i;
     int player = whoseTurn(gs);
@@ -128,23 +122,11 @@ int main(){
         gsCopy = gs;
         gsOrig = gs;
 
-        //jump point for signal catcher
-        // if (setjmp(buffer) != 0){
-        //     printf("FAILURE - Function Timeout\n");
-        //     success = 0;
-        //     printTestInfo(&gsOrig, i, success);
-        // }
-        // else {
-            //alarm(5); //set a timer to catch infinite loop
+        cardEffect(adventurer, 0, 0, 0, &gs, handPos, &bonus);
 
-            //run the effect
-            cardEffect(adventurer, 0, 0, 0, &gs, handPos, &bonus);
-            //alarm(0); //remove timer
+        success = checkGameStateBasic(&gs, &gsCopy);
+        printTestInfo(&gsOrig, i, success);
 
-            //function did not timeout
-            success = checkGameStateBasic(&gs, &gsCopy);
-            printTestInfo(&gsOrig, i, success); 
-        // }
         if (success) successNum++;
     }
 
