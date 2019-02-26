@@ -3,10 +3,15 @@
 #include "random_test_helpers.h"
 #include "test_helpers.h"
 
+//https://stackoverflow.com/questions/9994530/warning-implicit-declaration-of-function-kill
+#define _POSIX_SOURCE
+#include <sys/types.h>
 #include <stdio.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/wait.h>
+
 
 #define NUM_TESTS 100
 
@@ -19,7 +24,7 @@ void timeoutCatch(){
 
 int treasureCountTotal(struct gameState* gs){
     int i;
-    int player = whoseTurn(gsNew);
+    int player = whoseTurn(gs);
     int treasureCount = 0;
     for (i = 0; i < gs->deckCount[player]; i++){
         if (gs->deck[player][i] >= copper && gs->deck[player][i] <= gold){
@@ -150,7 +155,7 @@ int main(){
                 //run the effect
                 cardEffect(adventurer, 0, 0, 0, &gs, handPos, &bonus);
 
-                success = compareGameStateBasic(&gs, &gsCopy)
+                success = checkGameStateBasic(&gs, &gsCopy);
                 printTestInfo(&gsOrig, i, success); 
             }
         }
