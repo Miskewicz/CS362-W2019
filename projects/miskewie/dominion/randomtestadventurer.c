@@ -13,7 +13,7 @@
 #include <sys/wait.h>
 #include <setjmp.h>
 
-#define NUM_TESTS 100
+#define NUM_TESTS 10000
 
 jmp_buf buffer;
 
