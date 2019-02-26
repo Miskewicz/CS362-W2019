@@ -68,18 +68,18 @@ int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
     if (treasureCount > 2) treasureCount = 2;
 
     //check handsize increased by treasureCount - 1
-    success = success && checkValue(gsNew->handCount[player], gsOrig->handCount[player] + treasureCount - 1, "Hand size", 0);
+    success = checkValue(gsNew->handCount[player], gsOrig->handCount[player] + treasureCount - 1, "Hand size", 0) && success;
     
     //played card increased by 1
-    success = success && checkValue(gsNew->playedCardCount, gsOrig->playedCardCount + 1, "Card added to played cards", 0);
+    success = checkValue(gsNew->playedCardCount, gsOrig->playedCardCount + 1, "Card added to played cards", 0) && success;
 
     //check played card is adventurer
-    success = success && checkValue(gsNew->playedCards[gsNew->playedCardCount - 1], adventurer, "Played card is adventurer", 0);
+    success = checkValue(gsNew->playedCards[gsNew->playedCardCount - 1], adventurer, "Played card is adventurer", 0) && success;
 
     //total deck/discard decreased by treasureCount
-    success = success && checkValue(gsNew->deckCount[player] + gsNew->discardCount[player], 
+    success = checkValue(gsNew->deckCount[player] + gsNew->discardCount[player], 
                                     gsOrig->deckCount[player] + gsOrig->discardCount[player] - treasureCount, 
-                                    "Total deck size decreased by drawn treasures", 0);
+                                    "Total deck size decreased by drawn treasures", 0) && success;
 
     for (i = 0; i < gsNew->handCount[player]; i++){
         if (gsNew->hand[player][i] >= copper && gsNew->hand[player][i] <= gold){
