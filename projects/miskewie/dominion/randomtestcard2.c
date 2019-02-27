@@ -82,7 +82,7 @@ int main(){
 
             //set the active player
             activePlayer = randomActivePlayer(&gs);
-        } while(gs.handCount[activePlayer] == 0);
+        } while(gs.handCount[activePlayer] < 2);
 
         //add mine to a random position in players hand
         handPos = addCardToHandRandom(&gs, activePlayer, mine);
@@ -93,7 +93,7 @@ int main(){
 
         //get a random card selection that is NOT the mine being played
         do{
-            trashSelection = randBetween(0, gs.handCount[activePlayer]);
+            trashSelection = randBetween(0, gs.handCount[activePlayer] - 1);
         } while (trashSelection == handPos);
         //pick a random card to gain
         gainSelection = getRandomCard();
