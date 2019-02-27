@@ -4,15 +4,18 @@
 #include <string.h>
 
 
+//get a random integer between (inclusive) the specified min and max
 int randBetween(int min, int max){
     return(rand() % (max - min + 1) + min);
 }
 
+//get a random card from all possible cards
 int getRandomCard(){
     return(randBetween(curse, treasure_map));
 }
 
-
+//set a random player to the whoseTurn attribute of the gameState, and return the
+//player selected.
 int randomActivePlayer(struct gameState* gs){
     int activePlayer;
 
@@ -22,7 +25,9 @@ int randomActivePlayer(struct gameState* gs){
     return activePlayer;
 }
 
-
+//Adds a specific card to a specific player's hand in a random position.
+//if the player's hand is empty, will add the card. If the player's hand
+//is not empty, will replace a random card in the hand.
 int addCardToHandRandom(struct gameState* gs, int player, int card){
     int handPos;
 
@@ -40,19 +45,33 @@ int addCardToHandRandom(struct gameState* gs, int player, int card){
     }
 }
 
-
+//generate random supply numbers for ALL card types.
+//using a random number between 0 and MAX_DECK.
 void randomizeSupply(struct gameState* gs){
     int i;
     for(i = curse; i <= treasure_map; i++){
-        gs->supplyCount[i] = randBetween(0, MAX_DECK);
+        if(i >= copper && i <= gold){
+            gs->supplyCount[i] = randBetween(0, 60);
+        }
+        else if(i == curse){
+            gs->supplyCount[i] = randBetween(0, 30);
+        }
+        else if(i >= estate && i <= province){
+            gs->supplyCount[i] = randBetween(0, 24);
+        }
+        else {
+            gs->supplyCount[i] = randBetween(0, 10);
+        }
     }
 }
 
+//generate a completely random played cards pile.
+//size will be a random number between 0 and MAX_HAND.
 void randomizePlayedCards(struct gameState* gs){
     int i;
 
     //played card count
-    gs->playedCardCount = randBetween(0, MAX_HAND);
+    gs->playedCardCount = randBetween(0, MAX_DECK);
 
     //populate played cards
     for(i = 0; i < gs->playedCardCount; i++){
@@ -60,6 +79,8 @@ void randomizePlayedCards(struct gameState* gs){
     }
 }
 
+//generate a completely random discard pile for a specific player.
+//will use a random discard size between 0 and MAX_DECK
 void randomizeDiscard(struct gameState* gs, int player){
     int i;
 
@@ -72,6 +93,8 @@ void randomizeDiscard(struct gameState* gs, int player){
     }
 }
 
+//generate a completely random hand for a specific player.
+//will use a random deck size between 0 and MAX_HAND
 void randomizeHand(struct gameState* gs, int player){
     int i;
 
@@ -84,6 +107,8 @@ void randomizeHand(struct gameState* gs, int player){
     }
 }
 
+//generate a completely random deck for a specific player.
+//will use a random deck size between 0 and MAX_DECK
 void randomizeDeck(struct gameState* gs, int player){
     int i;
     
@@ -97,7 +122,8 @@ void randomizeDeck(struct gameState* gs, int player){
 }
 
 
-//generate a completely random gameState
+//generate a completely random gameState that contains
+//values for all attributes within reason.
 void randomizeGameState(struct gameState* gs){
 
     int i;

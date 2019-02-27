@@ -8,6 +8,7 @@
 
 #define NUM_TESTS 10000
 
+//count the total treasure cards in the deck+discard of the gameState provided as input
 int treasureCountTotal(struct gameState* gs){
     int i;
     int player = whoseTurn(gs);
@@ -25,7 +26,6 @@ int treasureCountTotal(struct gameState* gs){
     return (treasureCount);
 }
 
-
 // print relevant values of the gameState input parameters
 void printTestInfo(struct gameState* gs, int testNum, int success){
     if (success){
@@ -39,7 +39,15 @@ void printTestInfo(struct gameState* gs, int testNum, int success){
     printf("Input DeckCount = %i\n", gs->deckCount[whoseTurn(gs)]);
 }
 
-
+//check a gameState for expected changes when playing an adventurer card 
+//from an original gameState. Can only check some changes as the card effect
+//is not completely predictive because of the potential for a deck shuffle.
+//This function returns true if ALL checks were successful.
+//verifies the following:
+//  1. handsize increased correctly
+//  2. adventure card was added to played cards correctly
+//  3. deck/discard decreased in size correctly
+//  4. treasure cards in hand increased by the correct amount
 int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
     int player = whoseTurn(gsNew);
     int success = 1;
@@ -68,19 +76,21 @@ int checkGameStateBasic(struct gameState* gsNew, struct gameState* gsOrig){
                                     gsOrig->deckCount[player] + gsOrig->discardCount[player] - treasureCount, 
                                     "Total deck size decreased by drawn treasures", 0) && success;
 
+    //count treasure cards in hand of new gameState
     for (i = 0; i < gsNew->handCount[player]; i++){
         if (gsNew->hand[player][i] >= copper && gsNew->hand[player][i] <= gold){
             treasureInHand++;
         }
     }
+    //count treasure cards in hand of original gameState
     for (i = 0; i < gsOrig->handCount[player]; i++){
         if (gsOrig->hand[player][i] >= copper && gsOrig->hand[player][i] <= gold){
             treasureInHandOrig++;
         }
     }
     
-    //treasures in hand increased by treasureCount
-    success = success && checkValue(treasureInHand, treasureInHandOrig + treasureCount, "Additional treasures in hand", 0);
+    //check treasures in hand increased by treasureCount
+    success = checkValue(treasureInHand, treasureInHandOrig + treasureCount, "Additional treasures in hand", 0) && success;
 
     return(success);
 }
