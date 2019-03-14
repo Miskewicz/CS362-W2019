@@ -8,6 +8,8 @@ https://google.com
 t
 https://boardgamegeek.com/geeksearch.php?action=search&objecttype=boardgame&q=cats&B1=Go
 t
+https://google.com/a/b
+t
 http://.com
 f
 www.google.com

@@ -87,7 +87,7 @@ public class UrlValidatorTest extends TestCase {
 	   List<String> list = Arrays.asList(TESTING_TLDS);
 	   
 	   missingTLDCount = 0;
-	   for (int i = 0; i < 10000; i++) {
+	   for (int i = 0; i < 100000; i++) {
 		   testRandomValidURL(list);
 	   }
 	   
@@ -98,7 +98,7 @@ public class UrlValidatorTest extends TestCase {
 	   List<String> list = Arrays.asList(TESTING_TLDS);
 	   
 	   missingTLDCount = 0;
-	   for (int i = 0; i <10000; i++) {
+	   for (int i = 0; i < 100000; i++) {
 		   testRandomInvalidURL(list);
 	   }
 	   
@@ -240,19 +240,21 @@ private String generateRandomValidQuery() {
 
 private String generateRandomValidPath() {
 	Random rng = new Random();
-	StringBuilder URL = new StringBuilder();
 	String validPathChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~!$&')(*+,;=:@%";
 	String hexDigits = "0123456789ABCDEFabcdef";
-	URL.append('/');
+	StringBuilder URL;
 	int pathSize = rng.nextInt(100);
-	for(int i = 0; i < pathSize; i++) {
-		char c = validPathChars.charAt(rng.nextInt(validPathChars.length()));
-		URL.append(c);
-		if (c == '%') {
-			URL.append(hexDigits.charAt(rng.nextInt(hexDigits.length())));
-			URL.append(hexDigits.charAt(rng.nextInt(hexDigits.length())));
+	do {
+		URL = new StringBuilder("/");
+		for(int i = 0; i < pathSize; i++) {
+			char c = validPathChars.charAt(rng.nextInt(validPathChars.length()));
+			URL.append(c);
+			if (c == '%') {
+				URL.append(hexDigits.charAt(rng.nextInt(hexDigits.length())));
+				URL.append(hexDigits.charAt(rng.nextInt(hexDigits.length())));
+			}
 		}
-	}
+	} while(URL.toString().equals("/..") || URL.toString().startsWith("/../"));
 	return URL.toString();
 }
 
@@ -332,7 +334,7 @@ private String generateRandomInvalidTLD() {
 	String charSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_~!$&')(*+,;=@%";
 	String invalidTLD;
 	do {
-		invalidTLD = getRandomString(rng.nextInt(70), charSet);
+		invalidTLD = getRandomString(rng.nextInt(70) + 1, charSet);
 	} while (TLDList.contains(invalidTLD.toUpperCase()));
 	return invalidTLD;
 }
@@ -378,7 +380,7 @@ private String generateRandomInvalidScheme() {
 				if(sc.hasNextLine()) {
 					String isCorrect = sc.nextLine(); //and the expected result if it exists
 					boolean correct = isCorrect.equals("t"); //convert to bool
-					testingURLs.add(new ResultPair(line, correct)); //create result pair and add to array
+					testingURLs.add(new ResultPair(line, !correct)); //create result pair and add to array
 				}
 			}
 			sc.close(); //close scanner
